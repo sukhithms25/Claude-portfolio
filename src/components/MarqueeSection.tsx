@@ -1,5 +1,4 @@
 import React from 'react';
-import { useInViewAnimation } from '../hooks/useInViewAnimation';
 
 // Marquee images from motionsites.ai
 const marqueeImages = [

@@ -1,5 +1,5 @@
 import React from 'react';
-import { GraduationCap, Calendar, MapPin, Award, BookOpen } from 'lucide-react';
+import { GraduationCap, Calendar, MapPin, Award } from 'lucide-react';
 import { useInViewAnimation } from '../hooks/useInViewAnimation';
 
 export const AboutSection: React.FC = () => {

@@ -12,8 +12,8 @@ const projects = [
     description: 'Architected a modular AI operating system with custom runtime, memory management, telemetry, dependency injection, and local LLM integration. Built for extensibility and production-grade reliability.',
     tech: ['Python', 'FastAPI', 'Local LLM', 'SQLite', 'Docker', 'Event-Driven'],
     icon: Bot,
-    gradient: 'from-sky-500/20 to-indigo-500/20',
-    accentColor: '#38bdf8',
+    gradient: 'from-[#163832]/40 to-[#235347]/40',
+    accentColor: '#8EB69B',
     gif: 'https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif',
     github: 'https://github.com/sukhithms25',
     highlight: '🏆 Flagship Project',
@@ -25,8 +25,8 @@ const projects = [
     description: 'Built an autonomous AI developer agent that analyzes GitHub issues, generates code fixes, and automates pull request creation. End-to-end workflow automation from issue to merged PR.',
     tech: ['Python', 'GitHub API', 'LLM', 'Automation', 'REST APIs'],
     icon: Zap,
-    gradient: 'from-violet-500/20 to-pink-500/20',
-    accentColor: '#818cf8',
+    gradient: 'from-[#0B2B26]/60 to-[#163832]/60',
+    accentColor: '#DAF1DE',
     gif: 'https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif',
     github: 'https://github.com/sukhithms25',
     highlight: '🤖 AI Agent',
@@ -38,8 +38,8 @@ const projects = [
     description: 'Developed a context-aware personal productivity platform using 3 specialized AI agents, 3 MCP servers, and shared SQLite memory. Enables seamless cross-agent context sharing and persistent memory.',
     tech: ['Python', 'Multi-Agent', 'MCP', 'SQLite', 'Context Management'],
     icon: Globe,
-    gradient: 'from-emerald-500/20 to-cyan-500/20',
-    accentColor: '#34d399',
+    gradient: 'from-[#163832]/50 to-[#235347]/50',
+    accentColor: '#8EB69B',
     gif: 'https://motionsites.ai/assets/hero-portfolio-cosmic-preview-BpvWJ3Nc.gif',
     github: 'https://github.com/sukhithms25',
     highlight: '🧠 Multi-Agent',
@@ -51,8 +51,8 @@ const projects = [
     description: 'Built a production-grade FastAPI backend with JWT authentication, PostgreSQL database, and location-based harvest discovery for farmers. Includes secure RESTful endpoints and geospatial queries.',
     tech: ['FastAPI', 'PostgreSQL', 'JWT', 'Python', 'REST APIs', 'Location-Based'],
     icon: Database,
-    gradient: 'from-orange-500/20 to-yellow-500/20',
-    accentColor: '#fbbf24',
+    gradient: 'from-[#235347]/40 to-[#163832]/40',
+    accentColor: '#DAF1DE',
     gif: 'https://motionsites.ai/assets/hero-velorah-preview-CJNTtbpd.gif',
     github: 'https://github.com/sukhithms25',
     highlight: '🌾 Full-Stack',
@@ -148,7 +148,7 @@ export const ProjectsSection: React.FC = () => {
     <section id="projects" className="py-24 relative overflow-hidden">
       {/* Background glow */}
       <div className="absolute bottom-0 left-0 w-96 h-96 rounded-full opacity-5 pointer-events-none"
-        style={{ background: 'radial-gradient(circle, #34d399 0%, transparent 70%)' }} />
+        style={{ background: 'radial-gradient(circle, #8EB69B 0%, transparent 70%)' }} />
 
       <div className="max-w-[1200px] mx-auto px-6">
         {/* Title */}
@@ -156,7 +156,7 @@ export const ProjectsSection: React.FC = () => {
           ref={titleRef as React.RefObject<HTMLDivElement>}
           className={`mb-20 ${titleInView ? 'animate-fade-in-up' : 'opacity-0'}`}
         >
-          <span className="text-xs font-mono text-sky-400 tracking-widest uppercase mb-3 block">02 / Projects</span>
+          <span className="text-xs font-mono tracking-widest uppercase mb-3 block" style={{ color: '#8EB69B' }}>02 / Projects</span>
           <h2 className="text-4xl md:text-5xl font-serif-accent font-semibold text-white tracking-tight">
             Things I've <span className="gradient-text">Built</span>
           </h2>

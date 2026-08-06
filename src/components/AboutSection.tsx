@@ -10,7 +10,7 @@ export const AboutSection: React.FC = () => {
     <section id="about" className="py-24 relative overflow-hidden">
       {/* Background accent */}
       <div className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-5 pointer-events-none"
-        style={{ background: 'radial-gradient(circle, #818cf8 0%, transparent 70%)' }} />
+        style={{ background: 'radial-gradient(circle, #8EB69B 0%, transparent 70%)' }} />
 
       <div className="section-container">
         {/* Section title */}
@@ -18,7 +18,7 @@ export const AboutSection: React.FC = () => {
           ref={titleRef as React.RefObject<HTMLDivElement>}
           className={`mb-16 ${titleInView ? 'animate-fade-in-up' : 'opacity-0'}`}
         >
-          <span className="text-xs font-mono text-sky-400 tracking-widest uppercase mb-3 block">01 / About</span>
+          <span className="text-xs font-mono tracking-widest uppercase mb-3 block" style={{ color: '#8EB69B' }}>01 / About</span>
           <h2 className="text-4xl md:text-5xl font-serif-accent font-semibold text-white tracking-tight">
             The Developer <span className="gradient-text">Behind the Code</span>
           </h2>
@@ -34,7 +34,7 @@ export const AboutSection: React.FC = () => {
             <div className="glass rounded-3xl p-8 card-3d">
               <p className="text-slate-300 leading-relaxed text-base mb-4">
                 I'm a Computer Science undergraduate at{' '}
-                <span className="text-sky-400 font-medium">MIT Mysore</span>, passionate about
+                <span className="font-medium" style={{ color: '#8EB69B' }}>MIT Mysore</span>, passionate about
                 building impactful software. I specialize in full-stack development using Python,
                 FastAPI, React, and PostgreSQL, with deep experience in AI-assisted development
                 and multi-agent systems.
@@ -49,7 +49,7 @@ export const AboutSection: React.FC = () => {
             {/* Contact info */}
             <div className="glass rounded-3xl p-6 space-y-3">
               <h3 className="text-white font-semibold text-sm mb-4 flex items-center gap-2">
-                <MapPin size={14} className="text-sky-400" />
+                <MapPin size={14} style={{ color: '#8EB69B' }} />
                 Contact & Links
               </h3>
               {[
@@ -61,7 +61,9 @@ export const AboutSection: React.FC = () => {
                 <div key={label} className="flex items-center justify-between">
                   <span className="text-xs text-slate-500 w-16 shrink-0">{label}</span>
                   <a href={href} target="_blank" rel="noopener noreferrer"
-                    className="text-sky-400 hover:text-sky-300 text-sm transition-colors truncate ml-2">
+                    className="text-sm transition-colors truncate ml-2" style={{ color: '#8EB69B' }}
+                    onMouseEnter={e => (e.currentTarget.style.color = '#DAF1DE')}
+                    onMouseLeave={e => (e.currentTarget.style.color = '#8EB69B')}>
                     {value}
                   </a>
                 </div>
@@ -74,14 +76,14 @@ export const AboutSection: React.FC = () => {
             {/* Education */}
             <div className="glass rounded-3xl p-8 card-3d">
               <h3 className="text-white font-semibold mb-6 flex items-center gap-2">
-                <GraduationCap size={18} className="text-sky-400" />
+                <GraduationCap size={18} style={{ color: '#8EB69B' }} />
                 Education
               </h3>
               <div className="space-y-6">
-                <div className="relative pl-6 border-l border-sky-500/30">
-                  <div className="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-sky-500 shadow-[0_0_8px_rgba(14,165,233,0.6)]" />
-                  <div className="text-white font-medium text-sm">B.E Computer Science & Engineering</div>
-                  <div className="text-sky-400 text-xs font-mono mt-0.5">MIT Mysore</div>
+                  <div className="relative pl-6" style={{ borderLeft: '1px solid rgba(142,182,155,0.3)' }}>
+                    <div className="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full" style={{ background: '#8EB69B', boxShadow: '0 0 8px rgba(142,182,155,0.6)' }} />
+                    <div className="text-white font-medium text-sm">B.E Computer Science & Engineering</div>
+                    <div className="text-xs font-mono mt-0.5" style={{ color: '#8EB69B' }}>MIT Mysore</div>
                   <div className="flex items-center gap-3 mt-1">
                     <span className="text-slate-400 text-xs flex items-center gap-1">
                       <Calendar size={10} /> Expected 2027
@@ -89,10 +91,10 @@ export const AboutSection: React.FC = () => {
                     <span className="text-emerald-400 text-xs font-bold">CGPA: 7.75</span>
                   </div>
                 </div>
-                <div className="relative pl-6 border-l border-indigo-500/30">
-                  <div className="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full bg-indigo-500 shadow-[0_0_8px_rgba(99,102,241,0.6)]" />
-                  <div className="text-white font-medium text-sm">Pre-University College (PCMB)</div>
-                  <div className="text-indigo-400 text-xs font-mono mt-0.5">STG PU College</div>
+                  <div className="relative pl-6" style={{ borderLeft: '1px solid rgba(142,182,155,0.15)' }}>
+                    <div className="absolute -left-[5px] top-1 w-2.5 h-2.5 rounded-full" style={{ background: '#235347', boxShadow: '0 0 8px rgba(35,83,71,0.6)' }} />
+                    <div className="text-white font-medium text-sm">Pre-University College (PCMB)</div>
+                    <div className="text-xs font-mono mt-0.5" style={{ color: '#235347' }}>STG PU College</div>
                   <div className="flex items-center gap-3 mt-1">
                     <span className="text-slate-400 text-xs flex items-center gap-1">
                       <Calendar size={10} /> 2023
@@ -106,7 +108,7 @@ export const AboutSection: React.FC = () => {
             {/* Achievements */}
             <div className="glass rounded-3xl p-8 card-3d">
               <h3 className="text-white font-semibold mb-6 flex items-center gap-2">
-                <Award size={18} className="text-sky-400" />
+                <Award size={18} style={{ color: '#DAF1DE' }} />
                 Achievements
               </h3>
               <div className="space-y-3">
@@ -117,7 +119,7 @@ export const AboutSection: React.FC = () => {
                   { title: 'Participant', event: 'Solaris X Grand Hackathon', highlight: false },
                 ].map(({ title, event, highlight }) => (
                   <div key={event} className="flex items-center gap-3">
-                    <div className={`w-1.5 h-1.5 rounded-full shrink-0 ${highlight ? 'bg-yellow-400 shadow-[0_0_6px_rgba(251,191,36,0.8)]' : 'bg-sky-500'}`} />
+                    <div className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: highlight ? '#DAF1DE' : '#8EB69B', boxShadow: highlight ? '0 0 6px rgba(218,241,222,0.8)' : 'none' }} />
                     <div>
                       <span className={`text-sm font-medium ${highlight ? 'text-yellow-300' : 'text-white'}`}>{title}</span>
                       <span className="text-slate-400 text-xs ml-2">— {event}</span>

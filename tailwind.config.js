@@ -13,19 +13,21 @@ export default {
       },
       colors: {
         dark: {
-          DEFAULT: '#020b10',
-          50: '#0a1a22',
-          100: '#0d2030',
-          200: '#102840',
-          300: '#1e3a4a',
-          400: '#2a4a5e',
-          500: '#3a6070',
+          DEFAULT: '#051F20',
+          50: '#0B2B26',
+          100: '#163832',
+          200: '#1a3d37',
+          300: '#235347',
+          400: '#2a6055',
+          500: '#3a7060',
         },
-        sky: {
-          300: '#7dd3fc',
-          400: '#38bdf8',
-          500: '#0ea5e9',
-          600: '#0284c7',
+        mg: {
+          bg:      '#051F20',
+          deep:    '#0B2B26',
+          forest:  '#163832',
+          mid:     '#235347',
+          sage:    '#8EB69B',
+          mint:    '#DAF1DE',
         },
       },
       animation: {
@@ -71,8 +73,8 @@ export default {
           '50%': { backgroundPosition: '100% 50%' },
         },
         'pulse-glow': {
-          '0%, 100%': { boxShadow: '0 0 20px rgba(56,189,248,0.3)' },
-          '50%': { boxShadow: '0 0 40px rgba(56,189,248,0.6), 0 0 80px rgba(56,189,248,0.2)' },
+          '0%, 100%': { boxShadow: '0 0 20px rgba(16,185,129,0.3)' },
+          '50%': { boxShadow: '0 0 40px rgba(16,185,129,0.6), 0 0 80px rgba(217,119,6,0.2)' },
         },
         scaleIn: {
           '0%': { opacity: '0', transform: 'scale(0.8) translateY(20px)' },

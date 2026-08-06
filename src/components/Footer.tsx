@@ -92,7 +92,9 @@ export const Footer: React.FC = () => {
                 href={href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-600 hover:text-sky-400 transition-colors"
+                className="transition-colors" style={{ color: '#235347' }}
+                onMouseEnter={e => (e.currentTarget.style.color = '#8EB69B')}
+                onMouseLeave={e => (e.currentTarget.style.color = '#235347')}
               >
                 <Icon size={16} />
               </a>

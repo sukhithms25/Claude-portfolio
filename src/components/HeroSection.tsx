@@ -24,7 +24,7 @@ export const HeroSection: React.FC = () => {
       size: number; alpha: number; color: string;
     }> = [];
 
-    const colors = ['#38bdf8', '#818cf8', '#f472b6', '#34d399', '#fbbf24'];
+    const colors = ['#8EB69B', '#DAF1DE', '#235347', '#163832', '#8EB69B'];
 
     for (let i = 0; i < 80; i++) {
       particles.push({
@@ -65,7 +65,7 @@ export const HeroSection: React.FC = () => {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(56, 189, 248, ${0.06 * (1 - dist / 100)})`;
+            ctx.strokeStyle = `rgba(142, 182, 155, ${0.08 * (1 - dist / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -121,8 +121,8 @@ export const HeroSection: React.FC = () => {
       {/* Radial ambient glow */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(56,189,248,0.07) 0%, transparent 70%)',
+          style={{
+            background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(142,182,155,0.06) 0%, transparent 70%)',
           zIndex: 0,
         }}
       />
@@ -140,12 +140,12 @@ export const HeroSection: React.FC = () => {
       >
         {/* Badge */}
         <div
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full glass neon-border mb-8 text-xs text-sky-300 font-medium ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}
-          style={{ animationDelay: '0.1s' }}
+          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full glass neon-border mb-8 text-xs font-medium ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}
+          style={{ animationDelay: '0.1s', color: '#8EB69B' }}
         >
           <Sparkles size={12} className="animate-pulse" />
           Open to Software Developer Roles
-          <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#DAF1DE' }} />
         </div>
 
         {/* Name */}
@@ -170,7 +170,7 @@ export const HeroSection: React.FC = () => {
           style={{ animationDelay: '0.4s' }}
         >
           Computer Science undergraduate at{' '}
-          <span className="text-sky-400 font-medium">MIT Mysore</span> building
+          <span className="font-medium" style={{ color: '#8EB69B' }}>MIT Mysore</span> building
           full-stack applications, AI agents, and multi-agent systems that solve real problems.
         </p>
 
@@ -211,10 +211,16 @@ export const HeroSection: React.FC = () => {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-1 text-slate-500 hover:text-sky-400 transition-all duration-300 hover:-translate-y-1"
+              className="flex flex-col items-center gap-1 transition-all duration-300 hover:-translate-y-1"
+              style={{ color: '#235347' }}
+              onMouseEnter={e => (e.currentTarget.style.color = '#8EB69B')}
+              onMouseLeave={e => (e.currentTarget.style.color = '#235347')}
               title={label}
             >
-              <div className="w-10 h-10 rounded-full glass flex items-center justify-center hover:border-sky-500/30 border border-transparent transition-all">
+              <div className="w-10 h-10 rounded-full glass flex items-center justify-center border border-transparent transition-all" style={{ borderColor: 'transparent' }}
+                onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(142,182,155,0.3)')}
+                onMouseLeave={e => (e.currentTarget.style.borderColor = 'transparent')}
+              >
                 <Icon size={18} />
               </div>
               <span className="text-[10px] font-medium">{label}</span>
@@ -243,7 +249,10 @@ export const HeroSection: React.FC = () => {
       {/* Scroll indicator */}
       <button
         onClick={() => scrollToSection('about')}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-500 hover:text-sky-400 transition-colors z-10 animate-float"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-colors z-10 animate-float"
+        style={{ color: '#235347' }}
+        onMouseEnter={e => (e.currentTarget.style.color = '#8EB69B')}
+        onMouseLeave={e => (e.currentTarget.style.color = '#235347')}
       >
         <span className="text-xs font-mono tracking-widest uppercase">Scroll</span>
         <ChevronDown size={18} className="animate-bounce" />

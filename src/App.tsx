@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState } from 'react';
 import { Navbar } from './components/Navbar';
 import { HeroSection } from './components/HeroSection';
 import { MarqueeSection } from './components/MarqueeSection';
@@ -8,11 +8,15 @@ import { SkillsSection } from './components/SkillsSection';
 import { TestimonialCarousel } from './components/TestimonialCarousel';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
+import { LoadingScreen } from './components/LoadingScreen';
 import './index.css';
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
   return (
     <div className="relative min-h-screen bg-dark text-slate-200 overflow-x-hidden">
+      {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
       {/* Fixed Navbar */}
       <Navbar />
 

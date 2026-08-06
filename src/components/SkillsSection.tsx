@@ -5,7 +5,7 @@ const skillCategories = [
   {
     title: 'Languages',
     icon: '{ }',
-    color: '#38bdf8',
+    color: '#8EB69B',
     skills: [
       { name: 'Python', level: 90 },
       { name: 'JavaScript', level: 80 },
@@ -18,7 +18,7 @@ const skillCategories = [
   {
     title: 'Frameworks & Libraries',
     icon: '⚡',
-    color: '#818cf8',
+    color: '#DAF1DE',
     skills: [
       { name: 'FastAPI', level: 88 },
       { name: 'React.js', level: 82 },
@@ -30,7 +30,7 @@ const skillCategories = [
   {
     title: 'Databases',
     icon: '🗃',
-    color: '#34d399',
+    color: '#8EB69B',
     skills: [
       { name: 'PostgreSQL', level: 82 },
       { name: 'MySQL', level: 78 },
@@ -41,7 +41,7 @@ const skillCategories = [
   {
     title: 'Tools & Concepts',
     icon: '🛠',
-    color: '#fbbf24',
+    color: '#DAF1DE',
     skills: [
       { name: 'Git / GitHub', level: 88 },
       { name: 'Docker', level: 72 },
@@ -132,7 +132,7 @@ export const SkillsSection: React.FC = () => {
     <section id="skills" className="py-24 relative overflow-hidden">
       {/* Ambient glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none opacity-5"
-        style={{ background: 'radial-gradient(circle, #818cf8 0%, transparent 70%)' }} />
+        style={{ background: 'radial-gradient(circle, #235347 0%, transparent 70%)' }} />
 
       <div className="section-container">
         {/* Title */}
@@ -140,7 +140,7 @@ export const SkillsSection: React.FC = () => {
           ref={titleRef as React.RefObject<HTMLDivElement>}
           className={`mb-16 ${titleInView ? 'animate-fade-in-up' : 'opacity-0'}`}
         >
-          <span className="text-xs font-mono text-sky-400 tracking-widest uppercase mb-3 block">03 / Skills</span>
+          <span className="text-xs font-mono tracking-widest uppercase mb-3 block" style={{ color: '#8EB69B' }}>03 / Skills</span>
           <h2 className="text-4xl md:text-5xl font-serif-accent font-semibold text-white tracking-tight">
             My Tech <span className="gradient-text">Arsenal</span>
           </h2>

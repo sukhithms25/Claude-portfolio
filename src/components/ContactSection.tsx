@@ -31,28 +31,28 @@ const contactItems = [
     label: 'Email',
     value: 'sukhithms25@gmail.com',
     href: 'mailto:sukhithms25@gmail.com',
-    color: '#38bdf8',
+    color: '#8EB69B',
   },
   {
     icon: Phone,
     label: 'Phone',
     value: '+91 74839 21441',
     href: 'tel:+917483921441',
-    color: '#34d399',
+    color: '#DAF1DE',
   },
   {
     icon: GithubIcon,
     label: 'GitHub',
     value: 'github.com/sukhithms25',
     href: 'https://github.com/sukhithms25',
-    color: '#818cf8',
+    color: '#8EB69B',
   },
   {
     icon: LinkedinIcon,
     label: 'LinkedIn',
     value: 'linkedin.com/in/sukhith-m-s',
     href: 'https://linkedin.com/in/sukhith-m-s-324487382',
-    color: '#fbbf24',
+    color: '#DAF1DE',
   },
 ];
 
@@ -77,7 +77,10 @@ const ContactCard: React.FC<{ item: typeof contactItems[0]; index: number }> = (
         <div className="text-xs text-slate-500 mb-0.5">{item.label}</div>
         <div className="text-sm text-slate-300 group-hover:text-white transition-colors truncate">{item.value}</div>
       </div>
-      <ArrowRight size={14} className="text-slate-600 group-hover:text-sky-400 transition-colors self-end" />
+      <ArrowRight size={14} className="transition-colors self-end" style={{ color: '#163832' }}
+        onMouseEnter={e => (e.currentTarget.style.color = '#8EB69B')}
+        onMouseLeave={e => (e.currentTarget.style.color = '#163832')}
+      />
     </a>
   );
 };
@@ -138,7 +141,7 @@ export const ContactSection: React.FC = () => {
           ref={titleRef as React.RefObject<HTMLDivElement>}
           className={`mb-16 ${titleInView ? 'animate-fade-in-up' : 'opacity-0'}`}
         >
-          <span className="text-xs font-mono text-sky-400 tracking-widest uppercase mb-3 block">05 / Contact</span>
+          <span className="text-xs font-mono tracking-widest uppercase mb-3 block" style={{ color: '#8EB69B' }}>05 / Contact</span>
           <h2 className="text-4xl md:text-5xl font-serif-accent font-semibold text-white tracking-tight">
             Let's <span className="gradient-text">Work Together</span>
           </h2>
@@ -154,7 +157,7 @@ export const ContactSection: React.FC = () => {
         >
           {/* Ambient glow */}
           <div className="absolute inset-0 pointer-events-none"
-            style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(56,189,248,0.05) 0%, transparent 100%)' }} />
+            style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(142,182,155,0.04) 0%, transparent 100%)' }} />
 
           {/* Floating images */}
           {floatingImages.map((img) => (

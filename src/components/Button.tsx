@@ -31,16 +31,12 @@ export const Button: React.FC<ButtonProps> = ({
 
   const variants = {
     primary: `
-      bg-gradient-to-r from-sky-500 to-indigo-500
       text-white
-      shadow-[0_0_20px_rgba(14,165,233,0.3),0_4px_15px_rgba(0,0,0,0.3)]
-      hover:shadow-[0_0_30px_rgba(14,165,233,0.5),0_8px_25px_rgba(0,0,0,0.4)]
       hover:-translate-y-0.5
       active:translate-y-0
     `,
     secondary: `
-      bg-white/5 text-sky-300 border border-sky-500/30
-      hover:bg-white/10 hover:border-sky-500/50
+      hover:bg-white/5
       hover:-translate-y-0.5
     `,
     ghost: `
@@ -48,13 +44,31 @@ export const Button: React.FC<ButtonProps> = ({
       hover:text-white hover:bg-white/5
     `,
     outline: `
-      bg-transparent border border-slate-600 text-slate-300
-      hover:border-sky-500/50 hover:text-sky-300
+      bg-transparent text-slate-300
       hover:-translate-y-0.5
     `,
   };
 
+  const variantStyles: Record<string, React.CSSProperties> = {
+    primary: {
+      background: 'linear-gradient(135deg, #163832 0%, #235347 60%, #8EB69B 100%)',
+      border: '1px solid rgba(142,182,155,0.3)',
+      boxShadow: '0 0 20px rgba(142,182,155,0.2), 0 4px 15px rgba(0,0,0,0.4)',
+    },
+    secondary: {
+      background: 'rgba(35,83,71,0.3)',
+      border: '1px solid rgba(142,182,155,0.25)',
+      color: '#8EB69B',
+    },
+    ghost: {},
+    outline: {
+      border: '1px solid rgba(142,182,155,0.2)',
+      color: '#8EB69B',
+    },
+  };
+
   const classes = `${baseClasses} ${variants[variant]} ${className}`;
+  const inlineStyle = variantStyles[variant] ?? {};
 
   const content = (
     <>
@@ -66,14 +80,14 @@ export const Button: React.FC<ButtonProps> = ({
 
   if (href) {
     return (
-      <a href={href} className={classes} target="_blank" rel="noopener noreferrer">
+      <a href={href} className={classes} style={inlineStyle} target="_blank" rel="noopener noreferrer">
         {content}
       </a>
     );
   }
 
   return (
-    <button onClick={onClick} className={classes}>
+    <button onClick={onClick} className={classes} style={inlineStyle}>
       {content}
     </button>
   );

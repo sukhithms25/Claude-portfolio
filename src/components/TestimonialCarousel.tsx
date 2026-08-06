@@ -86,7 +86,7 @@ export const TestimonialCarousel: React.FC = () => {
           className={`flex flex-col md:flex-row items-start md:items-end justify-between mb-12 gap-4 ${titleInView ? 'animate-fade-in-up' : 'opacity-0'}`}
         >
           <div>
-            <span className="text-xs font-mono text-sky-400 tracking-widest uppercase mb-3 block">04 / Testimonials</span>
+            <span className="text-xs font-mono tracking-widest uppercase mb-3 block" style={{ color: '#8EB69B' }}>04 / Testimonials</span>
             <h2 className="text-4xl md:text-5xl font-serif-accent font-semibold text-white tracking-tight">
               What <span className="gradient-text">They Say</span>
             </h2>
@@ -123,7 +123,7 @@ export const TestimonialCarousel: React.FC = () => {
                   <div className="glass rounded-3xl p-8 md:pl-10 md:pr-24 py-10 border border-white/5">
                     {/* Quote SVG */}
                     <svg width="32" height="26" viewBox="0 0 32 26" fill="none" className="mb-6 opacity-40">
-                      <path d="M0 26V15.667C0 9.944 2.556 5.444 7.667 2.167L10.667 5C8.111 6.389 6.667 8.556 6.333 11.5H13V26H0ZM19 26V15.667C19 9.944 21.556 5.444 26.667 2.167L29.667 5C27.111 6.389 25.667 8.556 25.333 11.5H32V26H19Z" fill="#38bdf8"/>
+                      <path d="M0 26V15.667C9.944 9.944 2.556 5.444 7.667 2.167L10.667 5C8.111 6.389 6.667 8.556 6.333 11.5H13V26H0ZM19 26V15.667C19 9.944 21.556 5.444 26.667 2.167L29.667 5C27.111 6.389 25.667 8.556 25.333 11.5H32V26H19Z" fill="#8EB69B"/>
                     </svg>
                     <p className="text-slate-200 text-base md:text-lg leading-relaxed mb-8 italic">
                       "{t.quote}"
@@ -132,7 +132,7 @@ export const TestimonialCarousel: React.FC = () => {
                       <img
                         src={t.avatar}
                         alt={t.name}
-                        className="w-12 h-12 rounded-full object-cover ring-2 ring-sky-500/30"
+                        className="w-12 h-12 rounded-full object-cover" style={{ outline: '2px solid rgba(142,182,155,0.3)', outlineOffset: '2px' }}
                       />
                       <div>
                         <div className="text-white font-semibold text-sm">{t.name}</div>
@@ -153,7 +153,7 @@ export const TestimonialCarousel: React.FC = () => {
                 onClick={() => goTo(i + testimonials.length)}
                 className={`rounded-full transition-all duration-300 ${
                   i === displayIndex
-                    ? 'w-6 h-2 bg-sky-400'
+                    ? 'w-6 h-2'
                     : 'w-2 h-2 bg-white/20 hover:bg-white/40'
                 }`}
               />
@@ -163,13 +163,19 @@ export const TestimonialCarousel: React.FC = () => {
           {/* Navigation buttons */}
           <button
             onClick={prev}
-            className="absolute left-2 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 w-11 h-11 rounded-full glass flex items-center justify-center border border-white/10 hover:border-sky-500/30 hover:text-sky-400 text-slate-300 transition-all duration-300 z-10"
+            className="absolute left-2 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 w-11 h-11 rounded-full glass flex items-center justify-center border transition-all duration-300 z-10"
+            style={{ borderColor: 'rgba(142,182,155,0.2)', color: '#235347' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(142,182,155,0.4)'; e.currentTarget.style.color = '#8EB69B'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(142,182,155,0.2)'; e.currentTarget.style.color = '#235347'; }}
           >
             <ChevronLeft size={18} />
           </button>
           <button
             onClick={next}
-            className="absolute right-2 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 w-11 h-11 rounded-full glass flex items-center justify-center border border-white/10 hover:border-sky-500/30 hover:text-sky-400 text-slate-300 transition-all duration-300 z-10"
+            className="absolute right-2 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 w-11 h-11 rounded-full glass flex items-center justify-center border transition-all duration-300 z-10"
+            style={{ borderColor: 'rgba(142,182,155,0.2)', color: '#235347' }}
+            onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(142,182,155,0.4)'; e.currentTarget.style.color = '#8EB69B'; }}
+            onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(142,182,155,0.2)'; e.currentTarget.style.color = '#235347'; }}
           >
             <ChevronRight size={18} />
           </button>

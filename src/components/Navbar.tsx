@@ -58,9 +58,13 @@ export const Navbar: React.FC = () => {
             onClick={() => scrollTo(id)}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
               activeSection === id
-                ? 'bg-sky-500/20 text-sky-300 shadow-[0_0_12px_rgba(14,165,233,0.2)]'
-                : 'text-slate-400 hover:text-white hover:bg-white/5'
+                ? 'shadow-[0_0_12px_rgba(142,182,155,0.2)]'
+                : 'hover:bg-white/5'
             }`}
+            style={{
+              background: activeSection === id ? 'rgba(35,83,71,0.5)' : undefined,
+              color: activeSection === id ? '#DAF1DE' : '#8EB69B',
+            }}
           >
             {label}
           </button>

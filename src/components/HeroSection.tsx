@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Mail, Phone, ChevronDown, Code2, Sparkles } from 'lucide-react';
+import { Mail, Phone, ChevronDown, Cpu, ArrowRight, Layers } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './icons';
 import { Button } from './Button';
 import { useInViewAnimation } from '../hooks/useInViewAnimation';
@@ -9,7 +9,7 @@ export const HeroSection: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
-  // Animated particle canvas
+  // Ultra-subtle background particle canvas (reduced particle count & opacity so typography dominates)
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -24,16 +24,19 @@ export const HeroSection: React.FC = () => {
       size: number; alpha: number; color: string;
     }> = [];
 
-    const colors = ['#8EB69B', '#DAF1DE', '#235347', '#163832', '#8EB69B'];
+    const colors = ['#8EB69B', '#235347'];
 
-    for (let i = 0; i < 80; i++) {
+    // Reduced density by additional 20%+ for zero typography competition
+    const particleCount = window.innerWidth < 640 ? 20 : 35;
+
+    for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
-        size: Math.random() * 2 + 0.5,
-        alpha: Math.random() * 0.6 + 0.1,
+        vx: (Math.random() - 0.5) * 0.2,
+        vy: (Math.random() - 0.5) * 0.2,
+        size: Math.random() * 1.5 + 0.5,
+        alpha: Math.random() * 0.2 + 0.05,
         color: colors[Math.floor(Math.random() * colors.length)],
       });
     }
@@ -54,18 +57,18 @@ export const HeroSection: React.FC = () => {
         ctx.globalAlpha = p.alpha;
         ctx.fill();
       });
-      // Draw connections
+      // Minimal translucent node connection lines
       ctx.globalAlpha = 1;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
           const dx = particles[i].x - particles[j].x;
           const dy = particles[i].y - particles[j].y;
           const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 100) {
+          if (dist < 80) {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(142, 182, 155, ${0.08 * (1 - dist / 100)})`;
+            ctx.strokeStyle = `rgba(142, 182, 155, ${0.03 * (1 - dist / 80)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -87,7 +90,7 @@ export const HeroSection: React.FC = () => {
     };
   }, []);
 
-  // Cursor glow follow
+  // Subtle cursor glow
   useEffect(() => {
     const handleMouse = (e: MouseEvent) => {
       setCursorPos({ x: e.clientX, y: e.clientY });
@@ -103,102 +106,157 @@ export const HeroSection: React.FC = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden grid-bg"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden grid-bg bg-[#051F20]"
     >
-      {/* Canvas background */}
+      {/* Low-opacity background canvas */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full pointer-events-none"
         style={{ zIndex: 0 }}
       />
 
-      {/* Cursor glow */}
+      {/* Subtle cursor glow */}
       <div
         className="cursor-glow hidden md:block"
         style={{ left: cursorPos.x, top: cursorPos.y }}
       />
 
-      {/* Radial ambient glow */}
+      {/* Radial ambient glow (non-competing) */}
       <div
         className="absolute inset-0 pointer-events-none"
-          style={{
-            background: 'radial-gradient(ellipse 80% 60% at 50% 40%, rgba(142,182,155,0.06) 0%, transparent 70%)',
+        style={{
+          background: 'radial-gradient(ellipse 65% 45% at 50% 40%, rgba(142,182,155,0.04) 0%, transparent 70%)',
           zIndex: 0,
         }}
       />
 
-      {/* Orbit rings */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none" style={{ zIndex: 0 }}>
-        <div className="orbit-ring w-[500px] h-[500px] md:w-[800px] md:h-[800px] -translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 opacity-30" />
-        <div className="orbit-ring w-[700px] h-[700px] md:w-[1100px] md:h-[1100px] -translate-x-1/2 -translate-y-1/2 absolute top-1/2 left-1/2 opacity-15" style={{ animationDuration: '40s', animationDirection: 'reverse' }} />
-      </div>
-
-      {/* Main content */}
+      {/* Main Content — Engineering Product Landing Page Style */}
       <div
         ref={ref as React.RefObject<HTMLDivElement>}
-        className="relative z-10 text-center px-6 max-w-4xl mx-auto pt-24 pb-16"
+        className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto pt-24 pb-16 flex flex-col items-center"
       >
-        {/* Badge */}
+        {/* Level 1: Position Badge */}
         <div
-          className={`inline-flex items-center gap-2 px-4 py-2 rounded-full glass neon-border mb-8 text-xs font-medium ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}
+          className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass neon-border mb-6 text-xs font-mono tracking-wider ${
+            inView ? 'animate-fade-in-up' : 'opacity-0'
+          }`}
           style={{ animationDelay: '0.1s', color: '#8EB69B' }}
         >
-          <Sparkles size={12} className="animate-pulse" />
-          Open to Software Developer Roles
-          <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#DAF1DE' }} />
+          <Cpu size={13} className="animate-pulse text-[#8EB69B]" />
+          <span>ENGINEERING SYSTEMS &amp; AI ARCHITECTURE</span>
+          <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-[#DAF1DE]" />
         </div>
 
-        {/* Name */}
+        {/* Level 2: Primary Headline */}
         <h1
-          className={`font-serif-accent text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight mb-4 ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}
+          className={`font-serif-accent text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-semibold tracking-tight mb-3 ${
+            inView ? 'animate-fade-in-up' : 'opacity-0'
+          }`}
           style={{ animationDelay: '0.2s' }}
         >
           <span className="gradient-text">Sukhith M S</span>
         </h1>
 
-        {/* Role */}
+        {/* Level 3: Defined Engineering Title */}
         <p
-          className={`text-xl md:text-2xl text-slate-300 mb-3 font-mono ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}
+          className={`text-lg sm:text-2xl text-[#DAF1DE] mb-5 font-mono font-medium ${
+            inView ? 'animate-fade-in-up' : 'opacity-0'
+          }`}
           style={{ animationDelay: '0.3s' }}
         >
-          Full-Stack Developer &amp; AI Systems Builder
+          AI Systems &amp; Full-Stack Engineer
         </p>
 
-        {/* Tagline */}
-        <p
-          className={`text-base md:text-lg text-slate-400 leading-relaxed mb-10 max-w-2xl mx-auto ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}
+        {/* Level 4: Concise Engineering Evidence Statement (Reduced copy by 35%) */}
+        <div
+          className={`text-sm sm:text-base md:text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl mx-auto font-sans ${
+            inView ? 'animate-fade-in-up' : 'opacity-0'
+          }`}
           style={{ animationDelay: '0.4s' }}
         >
-          Computer Science undergraduate at{' '}
-          <span className="font-medium" style={{ color: '#8EB69B' }}>MIT Mysore</span> building
-          full-stack applications, AI agents, and multi-agent systems that solve real problems.
-        </p>
+          <p className="mb-3">
+            Architecting <span className="text-[#DAF1DE] font-semibold">AI operating systems</span>,{' '}
+            <span className="text-[#DAF1DE] font-semibold">autonomous developer agents</span>, and{' '}
+            <span className="text-[#DAF1DE] font-semibold">production APIs</span>.
+          </p>
 
-        {/* CTA Buttons */}
+          {/* Evidence pill strip */}
+          <div className="flex flex-wrap items-center justify-center gap-1.5 text-xs font-mono text-[#8EB69B] mt-2">
+            <span className="px-2.5 py-1 rounded-md glass border border-[rgba(142,182,155,0.15)]">Multi-Agent Systems</span>
+            <span className="text-slate-600">•</span>
+            <span className="px-2.5 py-1 rounded-md glass border border-[rgba(142,182,155,0.15)]">Local LLM Runtimes</span>
+            <span className="text-slate-600">•</span>
+            <span className="px-2.5 py-1 rounded-md glass border border-[rgba(142,182,155,0.15)]">FastAPI</span>
+            <span className="text-slate-600">•</span>
+            <span className="px-2.5 py-1 rounded-md glass border border-[rgba(142,182,155,0.15)]">PostgreSQL</span>
+            <span className="text-slate-600">•</span>
+            <span className="px-2.5 py-1 rounded-md glass border border-[rgba(142,182,155,0.15)]">MCP</span>
+            <span className="text-slate-600">•</span>
+            <span className="px-2.5 py-1 rounded-md glass border border-[rgba(142,182,155,0.15)]">Docker</span>
+          </div>
+        </div>
+
+        {/* Level 5: Direct Engineering CTAs */}
         <div
-          className={`flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}
+          className={`flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full sm:w-auto mb-10 ${
+            inView ? 'animate-fade-in-up' : 'opacity-0'
+          }`}
           style={{ animationDelay: '0.5s' }}
         >
+          {/* Primary CTA: Flagship Entry Point */}
           <Button
             variant="primary"
             onClick={() => scrollToSection('projects')}
-            icon={<Code2 size={16} />}
+            icon={<ArrowRight size={16} />}
+            iconPosition="right"
+            className="w-full sm:w-auto text-sm font-semibold"
           >
-            View My Projects
+            Explore Flagship Project (ULTRON)
           </Button>
+
+          {/* Secondary CTA: Technical Architecture Exploration */}
           <Button
             variant="secondary"
-            href="mailto:sukhithms25@gmail.com"
-            icon={<Mail size={16} />}
+            onClick={() => scrollToSection('projects')}
+            icon={<Layers size={15} />}
+            iconPosition="left"
+            className="w-full sm:w-auto text-sm"
           >
-            Get In Touch
+            Explore System Architecture
           </Button>
         </div>
 
-        {/* Social links */}
+        {/* Level 6: Technical Capability Cards (Replaced isolated stats with capability proof) */}
         <div
-          className={`flex items-center justify-center gap-6 mb-14 ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}
+          className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 w-full max-w-3xl mx-auto mb-10 ${
+            inView ? 'animate-fade-in-up' : 'opacity-0'
+          }`}
           style={{ animationDelay: '0.6s' }}
+        >
+          {[
+            { title: 'Autonomous Agents', detail: 'GitHub Issue-to-PR Workflow' },
+            { title: 'Local LLM Runtimes', detail: 'Custom Telemetry & Memory' },
+            { title: 'Multi-Agent MCP', detail: 'Shared SQLite Context' },
+            { title: 'Production Backends', detail: 'FastAPI & Geospatial Queries' },
+          ].map(({ title, detail }) => (
+            <div
+              key={title}
+              className="glass rounded-xl p-3.5 text-left border border-[rgba(142,182,155,0.15)] hover:border-[rgba(142,182,155,0.3)] transition-all duration-300"
+            >
+              <div className="text-xs sm:text-sm font-bold text-[#DAF1DE] font-mono mb-1">
+                {title}
+              </div>
+              <div className="text-[11px] text-slate-400 font-sans leading-tight">{detail}</div>
+            </div>
+          ))}
+        </div>
+
+        {/* Level 7: Social & Contact Links */}
+        <div
+          className={`flex items-center justify-center gap-6 ${
+            inView ? 'animate-fade-in-up' : 'opacity-0'
+          }`}
+          style={{ animationDelay: '0.7s' }}
         >
           {[
             { icon: GithubIcon, href: 'https://github.com/sukhithms25', label: 'GitHub' },
@@ -211,51 +269,33 @@ export const HeroSection: React.FC = () => {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-col items-center gap-1 transition-all duration-300 hover:-translate-y-1"
-              style={{ color: '#235347' }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#8EB69B')}
-              onMouseLeave={e => (e.currentTarget.style.color = '#235347')}
+              className="flex flex-col items-center gap-1 transition-all duration-300 hover:-translate-y-1 group"
               title={label}
             >
-              <div className="w-10 h-10 rounded-full glass flex items-center justify-center border border-transparent transition-all" style={{ borderColor: 'transparent' }}
-                onMouseEnter={e => (e.currentTarget.style.borderColor = 'rgba(142,182,155,0.3)')}
-                onMouseLeave={e => (e.currentTarget.style.borderColor = 'transparent')}
+              <div
+                className="w-9 h-9 rounded-full glass flex items-center justify-center border transition-all duration-300"
+                style={{ borderColor: 'rgba(142,182,155,0.2)', color: '#8EB69B' }}
               >
-                <Icon size={18} />
+                <Icon size={16} className="group-hover:text-[#DAF1DE] transition-colors" />
               </div>
-              <span className="text-[10px] font-medium">{label}</span>
+              <span className="text-[10px] font-mono text-slate-400 group-hover:text-[#8EB69B] transition-colors">
+                {label}
+              </span>
             </a>
-          ))}
-        </div>
-
-        {/* Stats row */}
-        <div
-          className={`grid grid-cols-3 gap-4 max-w-sm mx-auto ${inView ? 'animate-fade-in-up' : 'opacity-0'}`}
-          style={{ animationDelay: '0.7s' }}
-        >
-          {[
-            { value: '4+', label: 'Projects Built' },
-            { value: '7.75', label: 'CGPA at MIT' },
-            { value: 'Top 10', label: 'Protothon 2026' },
-          ].map(({ value, label }) => (
-            <div key={label} className="glass rounded-2xl p-4 text-center card-3d">
-              <div className="text-2xl font-bold gradient-text mb-1">{value}</div>
-              <div className="text-xs text-slate-500">{label}</div>
-            </div>
           ))}
         </div>
       </div>
 
-      {/* Scroll indicator */}
+      {/* Floating Scroll Chevron */}
       <button
-        onClick={() => scrollToSection('about')}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-colors z-10 animate-float"
-        style={{ color: '#235347' }}
-        onMouseEnter={e => (e.currentTarget.style.color = '#8EB69B')}
-        onMouseLeave={e => (e.currentTarget.style.color = '#235347')}
+        onClick={() => scrollToSection('projects')}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 transition-colors z-10 animate-float"
+        style={{ color: '#8EB69B' }}
       >
-        <span className="text-xs font-mono tracking-widest uppercase">Scroll</span>
-        <ChevronDown size={18} className="animate-bounce" />
+        <span className="text-[10px] font-mono tracking-widest uppercase text-slate-400">
+          Scroll
+        </span>
+        <ChevronDown size={16} className="animate-bounce text-[#8EB69B]" />
       </button>
     </section>
   );

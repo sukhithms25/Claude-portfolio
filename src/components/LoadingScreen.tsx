@@ -33,7 +33,7 @@ export function LoadingScreen({ onComplete }: LoadingScreenProps) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: '#020b10',
+        background: '#051F20',
         transition: 'opacity 0.8s ease',
         opacity: fadeOut ? 0 : 1,
         pointerEvents: fadeOut ? 'none' : 'all',

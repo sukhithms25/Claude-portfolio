@@ -21,8 +21,7 @@ export const Footer: React.FC = () => {
               <span className="gradient-text">Sukhith M S</span>
             </div>
             <p className="text-slate-400 text-sm max-w-xs leading-relaxed">
-              Full-Stack Developer & AI Systems Builder based in India.
-              Open to exciting opportunities.
+              Computer Science Engineer · MIT Mysore · Graduating 2027.
             </p>
             <a
               href="mailto:sukhithms25@gmail.com"
@@ -62,8 +61,9 @@ export const Footer: React.FC = () => {
                 <a
                   key={label}
                   href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  target={href.startsWith('mailto') ? undefined : '_blank'}
+                  rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+                  aria-label={label}
                   className="nav-link text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-1"
                 >
                   {label}
@@ -83,15 +83,16 @@ export const Footer: React.FC = () => {
           <span className="text-sm text-slate-600">Mysore, India · 2026</span>
           <div className="flex items-center gap-4">
             {[
-              { Icon: GithubIcon, href: 'https://github.com/sukhithms25' },
-              { Icon: LinkedinIcon, href: 'https://linkedin.com/in/sukhith-m-s-324487382' },
-              { Icon: Mail, href: 'mailto:sukhithms25@gmail.com' },
-            ].map(({ Icon, href }) => (
+              { Icon: GithubIcon, href: 'https://github.com/sukhithms25', ariaLabel: 'GitHub profile' },
+              { Icon: LinkedinIcon, href: 'https://linkedin.com/in/sukhith-m-s-324487382', ariaLabel: 'LinkedIn profile' },
+              { Icon: Mail, href: 'mailto:sukhithms25@gmail.com', ariaLabel: 'Send email' },
+            ].map(({ Icon, href, ariaLabel }) => (
               <a
                 key={href}
                 href={href}
-                target="_blank"
-                rel="noopener noreferrer"
+                target={href.startsWith('mailto') ? undefined : '_blank'}
+                rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+                aria-label={ariaLabel}
                 className="transition-colors" style={{ color: '#235347' }}
                 onMouseEnter={e => (e.currentTarget.style.color = '#8EB69B')}
                 onMouseLeave={e => (e.currentTarget.style.color = '#235347')}

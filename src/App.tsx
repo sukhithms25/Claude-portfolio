@@ -5,7 +5,7 @@ import { MarqueeSection } from './components/MarqueeSection';
 import { AboutSection } from './components/AboutSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { SkillsSection } from './components/SkillsSection';
-import { TestimonialCarousel } from './components/TestimonialCarousel';
+import { EngineeringRecord } from './components/EngineeringRecord';
 import { ContactSection } from './components/ContactSection';
 import { Footer } from './components/Footer';
 import { LoadingScreen } from './components/LoadingScreen';
@@ -15,8 +15,9 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   return (
-    <div className="relative min-h-screen bg-dark text-slate-200 overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#051F20] text-slate-200 overflow-x-hidden">
       {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
+
       {/* Fixed Navbar */}
       <Navbar />
 
@@ -25,7 +26,7 @@ function App() {
         {/* 1. Hero */}
         <HeroSection />
 
-        {/* 2. Marquee strip */}
+        {/* 2. Verified tech-stack marquee */}
         <div className="py-8">
           <MarqueeSection />
         </div>
@@ -39,10 +40,10 @@ function App() {
         {/* 5. Skills */}
         <SkillsSection />
 
-        {/* 6. Testimonials */}
-        <TestimonialCarousel />
+        {/* 6. Engineering Build Record (replaces fake testimonials) */}
+        <EngineeringRecord />
 
-        {/* 7. Contact / Partner */}
+        {/* 7. Contact */}
         <ContactSection />
       </main>
 

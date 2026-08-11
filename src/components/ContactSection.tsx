@@ -1,208 +1,250 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { Mail, Phone, ArrowRight } from 'lucide-react';
+import React from 'react';
+import { Mail, ArrowRight, MapPin, Download } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './icons';
 import { useInViewAnimation } from '../hooks/useInViewAnimation';
 
-const marqueeImages = [
-  'https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif',
-  'https://motionsites.ai/assets/hero-portfolio-cosmic-preview-BpvWJ3Nc.gif',
-  'https://motionsites.ai/assets/hero-velorah-preview-CJNTtbpd.gif',
-  'https://motionsites.ai/assets/hero-asme-preview-B_nGDnTP.gif',
-  'https://motionsites.ai/assets/hero-transform-data-preview-Cx5OU29N.gif',
-  'https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif',
-  'https://motionsites.ai/assets/hero-orbit-web3-preview-BXt4OttD.gif',
-  'https://motionsites.ai/assets/hero-nexora-preview-cx5HmUgo.gif',
-];
+// ─── Data ─────────────────────────────────────────────────────────────────────
+// All links verified against existing profiles / project repositories.
+// Phone number intentionally omitted (removed from all rebuilt sections).
+// Resume link omitted — no PDF asset exists in /public. Replace this
+// placeholder text with a real href once the asset is uploaded.
+// ─────────────────────────────────────────────────────────────────────────────
 
-interface FloatingImage {
-  id: number;
-  x: number;
-  y: number;
-  rotation: number;
-  src: string;
-  opacity: number;
-  scale: number;
-  createdAt: number;
-}
+const RESUME_EXISTS = false; // set to true and update RESUME_HREF once PDF is uploaded
+const RESUME_HREF = '/resume.pdf'; // update path when asset is available
 
-const contactItems = [
+const contactLinks = [
   {
+    id: 'email',
     icon: Mail,
     label: 'Email',
-    value: 'sukhithms25@gmail.com',
+    display: 'sukhithms25@gmail.com',
     href: 'mailto:sukhithms25@gmail.com',
-    color: '#8EB69B',
+    accent: '#8EB69B',
+    primary: true,
+    description: 'Fastest response',
   },
   {
-    icon: Phone,
-    label: 'Phone',
-    value: '+91 74839 21441',
-    href: 'tel:+917483921441',
-    color: '#DAF1DE',
-  },
-  {
-    icon: GithubIcon,
-    label: 'GitHub',
-    value: 'github.com/sukhithms25',
-    href: 'https://github.com/sukhithms25',
-    color: '#8EB69B',
-  },
-  {
+    id: 'linkedin',
     icon: LinkedinIcon,
     label: 'LinkedIn',
-    value: 'linkedin.com/in/sukhith-m-s',
+    display: 'linkedin.com/in/sukhith-m-s',
     href: 'https://linkedin.com/in/sukhith-m-s-324487382',
-    color: '#DAF1DE',
+    accent: '#DAF1DE',
+    primary: false,
+    description: 'Professional profile',
+  },
+  {
+    id: 'github',
+    icon: GithubIcon,
+    label: 'GitHub',
+    display: 'github.com/sukhithms25',
+    href: 'https://github.com/sukhithms25',
+    accent: '#8EB69B',
+    primary: false,
+    description: 'Source & repositories',
   },
 ];
 
-// Individual card with its own inView hook
-const ContactCard: React.FC<{ item: typeof contactItems[0]; index: number }> = ({ item, index }) => {
-  const { ref, inView } = useInViewAnimation();
+const roles = [
+  'AI Systems Engineering',
+  'Full-Stack Development',
+  'Developer Automation',
+  'Backend / API Engineering',
+];
+
+// ─── Components ───────────────────────────────────────────────────────────────
+
+const ContactLinkCard: React.FC<{
+  item: typeof contactLinks[0];
+  index: number;
+}> = ({ item, index }) => {
+  const { ref, inView } = useInViewAnimation(0.1);
   const Icon = item.icon;
+
   return (
     <a
       ref={ref as React.RefObject<HTMLAnchorElement>}
       href={item.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`glass rounded-2xl p-6 flex flex-col gap-3 card-3d group border border-white/5 hover:border-white/10 transition-all duration-300 ${inView ? 'animate-scale-in' : 'opacity-0'}`}
-      style={{ animationDelay: `${index * 0.1}s` }}
+      target={item.id !== 'email' ? '_blank' : undefined}
+      rel={item.id !== 'email' ? 'noopener noreferrer' : undefined}
+      aria-label={`${item.label}: ${item.display}`}
+      className={`group flex items-center gap-4 rounded-2xl glass-dark border transition-all duration-300 p-5
+        ${item.primary
+          ? 'border-[rgba(142,182,155,0.4)] hover:border-[#8EB69B]'
+          : 'border-[rgba(142,182,155,0.18)] hover:border-[rgba(142,182,155,0.4)]'
+        }
+        ${inView ? 'animate-fade-in-up' : 'opacity-0'}
+      `}
+      style={{ animationDelay: `${index * 0.12}s` }}
     >
-      <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-        style={{ background: `${item.color}15`, border: `1px solid ${item.color}30` }}>
-        <Icon size={18} style={{ color: item.color }} />
+      {/* Icon */}
+      <div
+        className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+        style={{
+          background: `${item.accent}12`,
+          border: `1px solid ${item.accent}30`,
+        }}
+      >
+        <Icon size={18} style={{ color: item.accent }} />
       </div>
-      <div>
-        <div className="text-xs text-slate-500 mb-0.5">{item.label}</div>
-        <div className="text-sm text-slate-300 group-hover:text-white transition-colors truncate">{item.value}</div>
+
+      {/* Text */}
+      <div className="flex-1 min-w-0">
+        <div
+          className="text-[10px] font-mono uppercase tracking-widest mb-0.5"
+          style={{ color: item.accent }}
+        >
+          {item.label}
+        </div>
+        <div className="text-sm font-medium text-[#DAF1DE] truncate group-hover:text-white transition-colors">
+          {item.display}
+        </div>
+        <div className="text-[11px] text-slate-500 font-mono mt-0.5">{item.description}</div>
       </div>
-      <ArrowRight size={14} className="transition-colors self-end" style={{ color: '#163832' }}
-        onMouseEnter={e => (e.currentTarget.style.color = '#8EB69B')}
-        onMouseLeave={e => (e.currentTarget.style.color = '#163832')}
+
+      {/* Arrow */}
+      <ArrowRight
+        size={14}
+        className="shrink-0 text-slate-600 group-hover:text-[#8EB69B] group-hover:translate-x-0.5 transition-all duration-200"
       />
     </a>
   );
 };
 
+// ─── Main Section ─────────────────────────────────────────────────────────────
+
 export const ContactSection: React.FC = () => {
-  const { ref: titleRef, inView: titleInView } = useInViewAnimation();
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [floatingImages, setFloatingImages] = useState<FloatingImage[]>([]);
-  const lastSpawnRef = useRef(0);
-  const imageIndexRef = useRef(0);
-  const animFrameRef = useRef<number>(0);
-
-  // Mouse trail image effect
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const now = Date.now();
-    if (now - lastSpawnRef.current < 80) return;
-    lastSpawnRef.current = now;
-
-    const rect = containerRef.current?.getBoundingClientRect();
-    if (!rect) return;
-
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const rotation = (Math.random() - 0.5) * 20;
-    const src = marqueeImages[imageIndexRef.current % marqueeImages.length];
-    imageIndexRef.current++;
-
-    setFloatingImages((prev) => [
-      ...prev.slice(-10),
-      { id: now, x, y, rotation, src, opacity: 1, scale: 1, createdAt: now },
-    ]);
-  };
-
-  // Fade out images via rAF loop
-  useEffect(() => {
-    const tick = () => {
-      const now = Date.now();
-      setFloatingImages((prev) =>
-        prev
-          .map((img) => {
-            const age = now - img.createdAt;
-            const progress = Math.min(age / 1000, 1);
-            return { ...img, opacity: 1 - progress, scale: 1 - progress * 0.2 };
-          })
-          .filter((img) => img.opacity > 0.01)
-      );
-      animFrameRef.current = requestAnimationFrame(tick);
-    };
-    animFrameRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(animFrameRef.current);
-  }, []);
+  const { ref: titleRef, inView: titleInView } = useInViewAnimation(0.1);
+  const { ref: ctaRef, inView: ctaInView } = useInViewAnimation(0.1);
+  const { ref: linksRef, inView: linksInView } = useInViewAnimation(0.1);
 
   return (
-    <section id="contact" className="py-24 relative overflow-hidden">
-      <div className="section-container">
-        {/* Title */}
+    <section id="contact" className="py-24 relative overflow-hidden bg-[#051F20]">
+      {/* Background glow */}
+      <div
+        className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full pointer-events-none opacity-[0.06]"
+        style={{ background: 'radial-gradient(ellipse at center, #8EB69B 0%, transparent 70%)' }}
+      />
+
+      <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
+        {/* Section Header */}
         <div
           ref={titleRef as React.RefObject<HTMLDivElement>}
           className={`mb-16 ${titleInView ? 'animate-fade-in-up' : 'opacity-0'}`}
         >
-          <span className="text-xs font-mono tracking-widest uppercase mb-3 block" style={{ color: '#8EB69B' }}>05 / Contact</span>
-          <h2 className="text-4xl md:text-5xl font-serif-accent font-semibold text-white tracking-tight">
-            Let's <span className="gradient-text">Work Together</span>
+          <span
+            className="text-xs font-mono tracking-widest uppercase mb-2 block"
+            style={{ color: '#8EB69B' }}
+          >
+            05 / CONTACT
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif-accent font-semibold text-white tracking-tight">
+            Let's build something{' '}
+            <span className="gradient-text">worth engineering.</span>
           </h2>
-          <div className="section-divider mt-6 max-w-xs" />
+          <div className="section-divider mt-4 max-w-xs" />
         </div>
 
-        {/* Interactive mouse-trail CTA */}
-        <div
-          ref={containerRef}
-          onMouseMove={handleMouseMove}
-          className="relative glass rounded-[40px] overflow-hidden flex flex-col items-center justify-center text-center py-32 px-6 mb-12 border border-white/5"
-          style={{ minHeight: '400px', cursor: 'none' }}
-        >
-          {/* Ambient glow */}
-          <div className="absolute inset-0 pointer-events-none"
-            style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 50%, rgba(142,182,155,0.04) 0%, transparent 100%)' }} />
+        {/* Two-column layout: CTA left, links right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+          {/* Left: Positioning + Primary CTA */}
+          <div
+            ref={ctaRef as React.RefObject<HTMLDivElement>}
+            className={`lg:col-span-5 ${ctaInView ? 'animate-fade-in-left' : 'opacity-0'}`}
+          >
+            <p className="text-sm sm:text-base text-slate-300 leading-relaxed font-sans mb-8 max-w-md">
+              Computer Science Engineer at MIT Mysore, graduating 2027. Available for internships
+              and roles in AI systems, full-stack development, and developer automation.
+            </p>
 
-          {/* Floating images */}
-          {floatingImages.map((img) => (
-            <img
-              key={img.id}
-              src={img.src}
-              alt="preview"
-              className="pointer-events-none absolute rounded-xl shadow-2xl object-cover"
-              style={{
-                left: img.x - 80,
-                top: img.y - 60,
-                width: 160,
-                height: 120,
-                transform: `rotate(${img.rotation}deg) scale(${img.scale})`,
-                opacity: img.opacity,
-                zIndex: 10,
-              }}
-            />
-          ))}
+            {/* Roles */}
+            <div className="space-y-2 mb-10">
+              {roles.map((role) => (
+                <div
+                  key={role}
+                  className="flex items-center gap-2.5 text-xs font-mono text-slate-400"
+                >
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#8EB69B] shrink-0" />
+                  {role}
+                </div>
+              ))}
+            </div>
 
-          <div className="relative z-20">
-            <h3 className="font-serif-accent text-5xl md:text-7xl lg:text-8xl font-semibold text-white mb-10 tracking-tight">
-              Hire Me
-            </h3>
+            {/* Primary Email CTA */}
             <a
               href="mailto:sukhithms25@gmail.com"
-              className="inline-flex items-center gap-3 px-8 py-4 rounded-full btn-primary text-white font-medium"
+              aria-label="Send email to sukhithms25@gmail.com"
+              className="inline-flex items-center gap-3 px-7 py-3.5 rounded-full font-medium text-sm text-[#051F20] bg-[#8EB69B] hover:bg-[#DAF1DE] transition-colors duration-200 group focus:outline-none focus:ring-2 focus:ring-[#8EB69B] focus:ring-offset-2 focus:ring-offset-[#051F20]"
             >
-              <img
-                src="https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?w=40&h=40&fit=crop"
-                alt="Avatar"
-                className="w-10 h-10 rounded-full object-cover"
+              <Mail size={15} />
+              Email Me
+              <ArrowRight
+                size={14}
+                className="group-hover:translate-x-0.5 transition-transform duration-200"
               />
-              Start chat with Sukhith
-              <ArrowRight size={16} />
             </a>
-            <p className="text-slate-500 text-sm mt-6 font-mono">Move your cursor over this area ✦</p>
+
+            {/* Resume */}
+            <div className="mt-5">
+              {RESUME_EXISTS ? (
+                <a
+                  href={RESUME_HREF}
+                  download
+                  aria-label="Download technical resume PDF"
+                  className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-xl text-xs font-mono font-medium border border-[rgba(142,182,155,0.3)] text-[#8EB69B] hover:border-[#8EB69B] hover:text-[#DAF1DE] transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-[#8EB69B] focus:ring-offset-2 focus:ring-offset-[#051F20]"
+                >
+                  <Download size={13} />
+                  Download Resume
+                </a>
+              ) : (
+                <p className="text-[11px] font-mono text-slate-600">
+                  Resume available on request via email.
+                </p>
+              )}
+            </div>
+
+            {/* Location */}
+            <div className="mt-8 flex items-center gap-2 text-xs font-mono text-slate-500">
+              <MapPin size={12} className="text-[#8EB69B]" />
+              Mysore, India · IST (UTC +5:30)
+            </div>
+          </div>
+
+          {/* Right: Contact links */}
+          <div
+            ref={linksRef as React.RefObject<HTMLDivElement>}
+            className={`lg:col-span-7 space-y-4 ${linksInView ? 'animate-fade-in-right' : 'opacity-0'}`}
+          >
+            {contactLinks.map((item, i) => (
+              <ContactLinkCard key={item.id} item={item} index={i} />
+            ))}
+
+            {/* Engineering evidence footer */}
+            <div className="mt-6 rounded-2xl glass-dark border border-[rgba(142,182,155,0.15)] p-5">
+              <p className="text-[11px] font-mono text-slate-500 leading-relaxed">
+                <span className="text-[#8EB69B] font-bold">SYSTEMS ON RECORD —</span>{' '}
+                ULTRON (Local AI OS) · GIT_AI (Autonomous Dev Agent) · CAPA (Multi-Agent MCP System) ·
+                Krishi-Setu (Production FastAPI Backend).{' '}
+                <a
+                  href="#projects"
+                  className="text-[#8EB69B] hover:text-[#DAF1DE] transition-colors underline decoration-[#8EB69B]/40 focus:outline-none focus:ring-1 focus:ring-[#8EB69B] rounded"
+                >
+                  View Engineering Showcase →
+                </a>
+              </p>
+            </div>
           </div>
         </div>
 
-        {/* Contact info cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {contactItems.map((item, i) => (
-            <ContactCard key={item.label} item={item} index={i} />
-          ))}
+        {/* Footer rule */}
+        <div className="mt-20 pt-8 border-t border-[rgba(142,182,155,0.1)] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <span className="text-[11px] font-mono text-slate-600">
+            © 2026 Sukhith M S. Built with React + Vite + TypeScript.
+          </span>
+          <span className="text-[11px] font-mono text-slate-600">
+            B.E. Computer Science &amp; Engineering · MIT Mysore · 2027
+          </span>
         </div>
       </div>
     </section>

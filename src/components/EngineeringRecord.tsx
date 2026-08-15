@@ -32,7 +32,8 @@ const buildRecords = [
     label: 'Autonomous Development Agent',
     icon: GitBranch,
     accent: '#DAF1DE',
-    href: 'https://github.com/sukhithms25/GIT_AI',
+    // NOTE: GIT_AI repo not yet public — links to profile until repo is made public
+    href: 'https://github.com/sukhithms25',
     artifacts: [
       { label: 'Pipeline', value: 'GitHub Issue → AST-parsed codebase context → patch generation → PR creation' },
       { label: 'Integration', value: 'GitHub REST API — reads repo tree, posts PRs, comments on issues' },
@@ -46,7 +47,8 @@ const buildRecords = [
     label: 'Multi-Agent MCP System',
     icon: Server,
     accent: '#8EB69B',
-    href: 'https://github.com/sukhithms25/CAPA',
+    // NOTE: CAPA repo not yet public — links to profile until repo is made public
+    href: 'https://github.com/sukhithms25',
     artifacts: [
       { label: 'Architecture', value: '3 MCP Servers — each with a defined tool interface and authority boundary' },
       { label: 'Memory', value: 'SQLite context store — persistent agent memory across session boundaries' },
@@ -60,7 +62,8 @@ const buildRecords = [
     label: 'Production FastAPI Backend',
     icon: Database,
     accent: '#DAF1DE',
-    href: 'https://github.com/sukhithms25/Krishi-Setu',
+    // NOTE: Krishi-Setu repo not yet public — links to profile until repo is made public
+    href: 'https://github.com/sukhithms25',
     artifacts: [
       { label: 'Database', value: 'PostgreSQL + PostGIS — geospatial radius queries for farmer-buyer matching' },
       { label: 'Auth', value: 'JWT authentication with role-based access (farmer / buyer / admin)' },

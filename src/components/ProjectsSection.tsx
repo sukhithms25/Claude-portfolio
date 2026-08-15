@@ -3,7 +3,6 @@ import {
   Zap,
   Globe,
   Database,
-  Layers,
   CheckCircle2,
   ChevronDown,
   ChevronUp,
@@ -78,7 +77,6 @@ const ultronData = {
   ],
   tech: ['Python', 'FastAPI', 'Local LLM', 'SQLite', 'MCP', 'Docker', 'Event-Driven'],
   github: 'https://github.com/sukhithms25/ULTRON',
-  mediaPreview: 'https://motionsites.ai/assets/hero-space-voyage-preview-eECLH3Yc.gif',
 };
 
 const secondaryProjects = [
@@ -99,9 +97,9 @@ const secondaryProjects = [
     outcomes: ['Autonomous PR Creation', 'AST Context Reduction', 'GitHub REST API Integration'],
     tech: ['Python', 'GitHub REST API', 'LLM Runtimes', 'AST Parsing', 'Git Automation'],
     icon: Zap,
-    github: 'https://github.com/sukhithms25/GIT_AI',
+    // NOTE: GIT_AI repo is not yet public — links to profile until repo is made public
+    github: 'https://github.com/sukhithms25',
     accentColor: '#DAF1DE',
-    gif: 'https://motionsites.ai/assets/hero-aethera-preview-DknSlcTa.gif',
   },
   {
     id: 'capa',
@@ -120,9 +118,9 @@ const secondaryProjects = [
     outcomes: ['3 MCP Servers Built', 'Unified SQLite Memory', 'Cross-Domain Agent Sync'],
     tech: ['Python', 'Multi-Agent Architecture', 'MCP Servers', 'SQLite', 'Context Management'],
     icon: Globe,
-    github: 'https://github.com/sukhithms25/CAPA',
+    // NOTE: CAPA repo is not yet public — links to profile until repo is made public
+    github: 'https://github.com/sukhithms25',
     accentColor: '#8EB69B',
-    gif: 'https://motionsites.ai/assets/hero-portfolio-cosmic-preview-BpvWJ3Nc.gif',
   },
   {
     id: 'krishi-setu',
@@ -141,9 +139,9 @@ const secondaryProjects = [
     outcomes: ['Geospatial Radius Queries', 'JWT Auth Pipeline', 'PostgreSQL Schema'],
     tech: ['FastAPI', 'PostgreSQL', 'JWT Auth', 'Python', 'Geospatial PostGIS', 'REST APIs'],
     icon: Database,
-    github: 'https://github.com/sukhithms25/Krishi-Setu',
+    // NOTE: Krishi-Setu repo is not yet public — links to profile until repo is made public
+    github: 'https://github.com/sukhithms25',
     accentColor: '#DAF1DE',
-    gif: 'https://motionsites.ai/assets/hero-velorah-preview-CJNTtbpd.gif',
   },
 ];
 
@@ -260,24 +258,33 @@ const UltronCard: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: Visual Media Preview - 5 cols */}
+        {/* Right Column: Architecture Diagram — 5 cols */}
         <div className="lg:col-span-5 flex flex-col">
-          <div className="relative h-full min-h-[260px] lg:min-h-[360px] rounded-2xl overflow-hidden glass border border-[rgba(142,182,155,0.2)] group">
-            <img
-              src={ultronData.mediaPreview}
-              alt="ULTRON Architecture Preview"
-              className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#051F20] via-transparent to-transparent opacity-80" />
-
-            {/* Overlay Architecture Stamp */}
-            <div className="absolute bottom-4 left-4 right-4 p-3 rounded-xl glass-dark border border-[rgba(142,182,155,0.25)] flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Layers size={16} className="text-[#8EB69B]" />
-                <span className="text-xs font-mono text-[#DAF1DE]">System Spec v2.4</span>
-              </div>
-              <span className="text-[10px] font-mono text-slate-400">4 Micro-Services</span>
+          <div className="relative h-full min-h-[260px] lg:min-h-[360px] rounded-2xl overflow-hidden glass border border-[rgba(142,182,155,0.2)]">
+            {/* Inline architecture visualization — replaces motionsites.ai third-party GIF */}
+            <div className="w-full h-full flex flex-col justify-center gap-3 p-6">
+              <p className="text-[10px] font-mono text-[#8EB69B] uppercase tracking-widest mb-1">System Architecture</p>
+              {[
+                { layer: '01', label: 'Core Runtime', detail: 'DI Container · Event Bus · Telemetry', color: '#DAF1DE' },
+                { layer: '02', label: 'Memory Engine', detail: 'SQLite · LRU Cache · Session Store', color: '#8EB69B' },
+                { layer: '03', label: 'Tool Orchestrator', detail: 'MCP Bridge · Tool Discovery · Sandbox', color: '#DAF1DE' },
+                { layer: '04', label: 'API Gateway', detail: 'FastAPI · WebSocket · REST Endpoints', color: '#8EB69B' },
+              ].map((item, i) => (
+                <div key={item.layer} className="flex items-center gap-3">
+                  <span className="text-[9px] font-mono shrink-0 w-5" style={{ color: item.color }}>{item.layer}</span>
+                  <div className="flex-1 rounded-lg px-3 py-2 border text-left"
+                    style={{ background: `${item.color}08`, borderColor: `${item.color}25` }}>
+                    <div className="text-[11px] font-mono font-bold" style={{ color: item.color }}>{item.label}</div>
+                    <div className="text-[10px] text-slate-500 mt-0.5">{item.detail}</div>
+                  </div>
+                  {i < 3 && (
+                    <div className="absolute" style={{ display: 'none' }} />
+                  )}
+                </div>
+              ))}
+              <p className="text-[9px] font-mono text-slate-600 mt-2">24-module kernel · Local-first inference · Zero cloud dependency</p>
             </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-[#051F20]/20 via-transparent to-transparent pointer-events-none" />
           </div>
         </div>
       </div>

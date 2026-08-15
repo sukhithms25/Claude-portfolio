@@ -8,7 +8,6 @@ import {
   Workflow,
   CheckCircle2,
   ExternalLink,
-  Code2,
   Mail,
 } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './icons';
@@ -202,22 +201,6 @@ export const AboutSection: React.FC = () => {
               </div>
             </div>
 
-            {/* Verified Honor Card */}
-            <div className="rounded-2xl glass-dark border border-[rgba(142,182,155,0.2)] p-6">
-              <h4 className="text-xs font-mono font-bold text-[#8EB69B] uppercase tracking-wider mb-3 flex items-center gap-2">
-                <Code2 size={16} className="text-[#DAF1DE]" />
-                Technical Recognition
-              </h4>
-              <div className="p-3 rounded-xl glass border border-[rgba(142,182,155,0.15)] flex items-center justify-between">
-                <div>
-                  <div className="text-xs font-bold text-[#DAF1DE]">Top 10 Finalist</div>
-                  <div className="text-[10px] font-mono text-slate-400">Protothon 2026 Hackathon</div>
-                </div>
-                <span className="px-2.5 py-1 rounded text-[10px] font-mono bg-[#235347]/50 text-[#DAF1DE] border border-[rgba(142,182,155,0.2)]">
-                  Verified
-                </span>
-              </div>
-            </div>
           </div>
         </div>
 

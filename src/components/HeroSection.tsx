@@ -9,7 +9,7 @@ export const HeroSection: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
-  // Ultra-subtle background particle canvas (reduced particle count & opacity so typography dominates)
+  // Ultra-subtle background particle canvas
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -24,9 +24,8 @@ export const HeroSection: React.FC = () => {
       size: number; alpha: number; color: string;
     }> = [];
 
-    const colors = ['#8EB69B', '#235347'];
+    const colors = ['#F05A17', '#A8A29C'];
 
-    // Reduced density by additional 20%+ for zero typography competition
     const particleCount = window.innerWidth < 640 ? 20 : 35;
 
     for (let i = 0; i < particleCount; i++) {
@@ -68,7 +67,7 @@ export const HeroSection: React.FC = () => {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(142, 182, 155, ${0.03 * (1 - dist / 80)})`;
+            ctx.strokeStyle = `rgba(168, 162, 156, ${0.03 * (1 - dist / 80)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -106,7 +105,7 @@ export const HeroSection: React.FC = () => {
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden grid-bg bg-[#051F20]"
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden grid-bg bg-[#03070B]"
     >
       {/* Low-opacity background canvas */}
       <canvas
@@ -121,30 +120,30 @@ export const HeroSection: React.FC = () => {
         style={{ left: cursorPos.x, top: cursorPos.y }}
       />
 
-      {/* Radial ambient glow (non-competing) */}
+      {/* Radial ambient glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: 'radial-gradient(ellipse 65% 45% at 50% 40%, rgba(142,182,155,0.04) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 65% 45% at 50% 40%, rgba(240,90,23,0.03) 0%, transparent 70%)',
           zIndex: 0,
         }}
       />
 
-      {/* Main Content — Engineering Product Landing Page Style */}
+      {/* Main Content */}
       <div
         ref={ref as React.RefObject<HTMLDivElement>}
         className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto pt-24 pb-16 flex flex-col items-center"
       >
         {/* Level 1: Position Badge */}
         <div
-          className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass neon-border mb-6 text-xs font-mono tracking-wider ${
+          className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-[#1D2125] mb-6 text-xs font-mono tracking-wider text-[#A8A29C] ${
             inView ? 'animate-fade-in-up' : 'opacity-0'
           }`}
-          style={{ animationDelay: '0.1s', color: '#8EB69B' }}
+          style={{ animationDelay: '0.1s' }}
         >
-          <Cpu size={13} className="animate-pulse text-[#8EB69B]" />
+          <Cpu size={13} className="animate-pulse text-[#F05A17]" />
           <span>ENGINEERING SYSTEMS &amp; AI ARCHITECTURE</span>
-          <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-[#DAF1DE]" />
+          <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-[#F05A17]" />
         </div>
 
         {/* Level 2: Primary Headline */}
@@ -159,7 +158,7 @@ export const HeroSection: React.FC = () => {
 
         {/* Level 3: Defined Engineering Title */}
         <p
-          className={`text-lg sm:text-2xl text-[#DAF1DE] mb-5 font-mono font-medium ${
+          className={`text-lg sm:text-2xl text-[#E6E3DF] mb-5 font-mono font-medium ${
             inView ? 'animate-fade-in-up' : 'opacity-0'
           }`}
           style={{ animationDelay: '0.3s' }}
@@ -167,32 +166,32 @@ export const HeroSection: React.FC = () => {
           AI Systems &amp; Full-Stack Engineer
         </p>
 
-        {/* Level 4: Concise Engineering Evidence Statement (Reduced copy by 35%) */}
+        {/* Level 4: Concise Engineering Evidence Statement */}
         <div
-          className={`text-sm sm:text-base md:text-lg text-slate-300 leading-relaxed mb-8 max-w-2xl mx-auto font-sans ${
+          className={`text-sm sm:text-base md:text-lg text-[#A8A29C] leading-relaxed mb-8 max-w-2xl mx-auto font-sans ${
             inView ? 'animate-fade-in-up' : 'opacity-0'
           }`}
           style={{ animationDelay: '0.4s' }}
         >
           <p className="mb-3">
-            Architecting <span className="text-[#DAF1DE] font-semibold">AI operating systems</span>,{' '}
-            <span className="text-[#DAF1DE] font-semibold">autonomous developer agents</span>, and{' '}
-            <span className="text-[#DAF1DE] font-semibold">production APIs</span>.
+            Architecting <span className="text-[#E6E3DF] font-semibold">AI operating systems</span>,{' '}
+            <span className="text-[#E6E3DF] font-semibold">autonomous developer agents</span>, and{' '}
+            <span className="text-[#E6E3DF] font-semibold">production APIs</span>.
           </p>
 
           {/* Evidence pill strip */}
-          <div className="flex flex-wrap items-center justify-center gap-1.5 text-xs font-mono text-[#8EB69B] mt-2">
-            <span className="px-2.5 py-1 rounded-md glass border border-[rgba(142,182,155,0.15)]">Multi-Agent Systems</span>
-            <span className="text-slate-600">•</span>
-            <span className="px-2.5 py-1 rounded-md glass border border-[rgba(142,182,155,0.15)]">Local LLM Runtimes</span>
-            <span className="text-slate-600">•</span>
-            <span className="px-2.5 py-1 rounded-md glass border border-[rgba(142,182,155,0.15)]">FastAPI</span>
-            <span className="text-slate-600">•</span>
-            <span className="px-2.5 py-1 rounded-md glass border border-[rgba(142,182,155,0.15)]">PostgreSQL</span>
-            <span className="text-slate-600">•</span>
-            <span className="px-2.5 py-1 rounded-md glass border border-[rgba(142,182,155,0.15)]">MCP</span>
-            <span className="text-slate-600">•</span>
-            <span className="px-2.5 py-1 rounded-md glass border border-[rgba(142,182,155,0.15)]">Docker</span>
+          <div className="flex flex-wrap items-center justify-center gap-1.5 text-xs font-mono text-[#A8A29C] mt-2">
+            <span className="px-2.5 py-1 rounded-md bg-[#101418] border border-[#1D2125]">Multi-Agent Systems</span>
+            <span className="text-[#1D2125]">•</span>
+            <span className="px-2.5 py-1 rounded-md bg-[#101418] border border-[#1D2125]">Local LLM Runtimes</span>
+            <span className="text-[#1D2125]">•</span>
+            <span className="px-2.5 py-1 rounded-md bg-[#101418] border border-[#1D2125]">FastAPI</span>
+            <span className="text-[#1D2125]">•</span>
+            <span className="px-2.5 py-1 rounded-md bg-[#101418] border border-[#1D2125]">PostgreSQL</span>
+            <span className="text-[#1D2125]">•</span>
+            <span className="px-2.5 py-1 rounded-md bg-[#101418] border border-[#1D2125]">MCP</span>
+            <span className="text-[#1D2125]">•</span>
+            <span className="px-2.5 py-1 rounded-md bg-[#101418] border border-[#1D2125]">Docker</span>
           </div>
         </div>
 
@@ -226,7 +225,7 @@ export const HeroSection: React.FC = () => {
           </Button>
         </div>
 
-        {/* Level 6: Technical Capability Cards (Replaced isolated stats with capability proof) */}
+        {/* Level 6: Technical Capability Cards */}
         <div
           className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 w-full max-w-3xl mx-auto mb-10 ${
             inView ? 'animate-fade-in-up' : 'opacity-0'
@@ -241,12 +240,12 @@ export const HeroSection: React.FC = () => {
           ].map(({ title, detail }) => (
             <div
               key={title}
-              className="glass rounded-xl p-3.5 text-left border border-[rgba(142,182,155,0.15)] hover:border-[rgba(142,182,155,0.3)] transition-all duration-300"
+              className="glass rounded-xl p-3.5 text-left border border-[#1D2125] hover:border-[#F05A17]/40 transition-all duration-300"
             >
-              <div className="text-xs sm:text-sm font-bold text-[#DAF1DE] font-mono mb-1">
+              <div className="text-xs sm:text-sm font-bold text-[#E6E3DF] font-mono mb-1">
                 {title}
               </div>
-              <div className="text-[11px] text-slate-400 font-sans leading-tight">{detail}</div>
+              <div className="text-[11px] text-[#A8A29C] font-sans leading-tight">{detail}</div>
             </div>
           ))}
         </div>
@@ -273,12 +272,11 @@ export const HeroSection: React.FC = () => {
               title={label}
             >
               <div
-                className="w-9 h-9 rounded-full glass flex items-center justify-center border transition-all duration-300"
-                style={{ borderColor: 'rgba(142,182,155,0.2)', color: '#8EB69B' }}
+                className="w-9 h-9 rounded-full bg-[#101418] flex items-center justify-center border border-[#1D2125] transition-all duration-300 group-hover:border-[#F05A17]/50 text-[#A8A29C]"
               >
-                <Icon size={16} className="group-hover:text-[#DAF1DE] transition-colors" />
+                <Icon size={16} className="group-hover:text-[#F05A17] transition-colors" />
               </div>
-              <span className="text-[10px] font-mono text-slate-400 group-hover:text-[#8EB69B] transition-colors">
+              <span className="text-[10px] font-mono text-[#A8A29C] group-hover:text-[#E6E3DF] transition-colors">
                 {label}
               </span>
             </a>
@@ -289,13 +287,12 @@ export const HeroSection: React.FC = () => {
       {/* Floating Scroll Chevron */}
       <button
         onClick={() => scrollToSection('projects')}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 transition-colors z-10 animate-float"
-        style={{ color: '#8EB69B' }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 transition-colors z-10 animate-float text-[#A8A29C] hover:text-[#E6E3DF]"
       >
-        <span className="text-[10px] font-mono tracking-widest uppercase text-slate-400">
+        <span className="text-[10px] font-mono tracking-widest uppercase text-[#A8A29C]">
           Scroll
         </span>
-        <ChevronDown size={16} className="animate-bounce text-[#8EB69B]" />
+        <ChevronDown size={16} className="animate-bounce text-[#F05A17]" />
       </button>
     </section>
   );

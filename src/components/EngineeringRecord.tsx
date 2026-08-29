@@ -17,7 +17,7 @@ const buildRecords = [
     project: 'ULTRON',
     label: 'Local AI Operating System',
     icon: Cpu,
-    accent: '#8EB69B',
+    accent: '#F05A17',
     href: 'https://github.com/sukhithms25/ULTRON',
     artifacts: [
       { label: 'Architecture', value: 'specter-core/app — 24-module kernel (di, events, memory, telemetry, tools, perception, runtime, api, …)' },
@@ -31,8 +31,7 @@ const buildRecords = [
     project: 'GIT_AI',
     label: 'Autonomous Development Agent',
     icon: GitBranch,
-    accent: '#DAF1DE',
-    // NOTE: GIT_AI repo not yet public — links to profile until repo is made public
+    accent: '#E6E3DF',
     href: 'https://github.com/sukhithms25',
     artifacts: [
       { label: 'Pipeline', value: 'GitHub Issue → AST-parsed codebase context → patch generation → PR creation' },
@@ -46,8 +45,7 @@ const buildRecords = [
     project: 'CAPA',
     label: 'Multi-Agent MCP System',
     icon: Server,
-    accent: '#8EB69B',
-    // NOTE: CAPA repo not yet public — links to profile until repo is made public
+    accent: '#F05A17',
     href: 'https://github.com/sukhithms25',
     artifacts: [
       { label: 'Architecture', value: '3 MCP Servers — each with a defined tool interface and authority boundary' },
@@ -61,8 +59,7 @@ const buildRecords = [
     project: 'KRISHI-SETU',
     label: 'Production FastAPI Backend',
     icon: Database,
-    accent: '#DAF1DE',
-    // NOTE: Krishi-Setu repo not yet public — links to profile until repo is made public
+    accent: '#E6E3DF',
     href: 'https://github.com/sukhithms25',
     artifacts: [
       { label: 'Database', value: 'PostgreSQL + PostGIS — geospatial radius queries for farmer-buyer matching' },
@@ -85,7 +82,7 @@ const BuildRecordCard: React.FC<{ record: typeof buildRecords[0]; index: number 
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
-      className={`rounded-2xl glass-dark border border-[rgba(142,182,155,0.18)] hover:border-[rgba(142,182,155,0.35)] transition-all duration-300 p-6 flex flex-col gap-5 ${
+      className={`rounded-2xl glass-dark border border-[#1D2125] hover:border-[#F05A17]/40 transition-all duration-300 p-6 flex flex-col gap-5 ${
         inView ? 'animate-scale-in' : 'opacity-0'
       }`}
       style={{ animationDelay: `${index * 0.12}s` }}
@@ -94,8 +91,7 @@ const BuildRecordCard: React.FC<{ record: typeof buildRecords[0]; index: number 
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-3">
           <div
-            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-            style={{ background: `${record.accent}12`, border: `1px solid ${record.accent}30` }}
+            className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 bg-[#101418] border border-[#1D2125]"
           >
             <Icon size={16} style={{ color: record.accent }} />
           </div>
@@ -106,7 +102,7 @@ const BuildRecordCard: React.FC<{ record: typeof buildRecords[0]; index: number 
             >
               {record.project}
             </div>
-            <div className="text-sm font-medium text-[#DAF1DE]">{record.label}</div>
+            <div className="text-sm font-medium text-[#E6E3DF]">{record.label}</div>
           </div>
         </div>
         <a
@@ -114,14 +110,14 @@ const BuildRecordCard: React.FC<{ record: typeof buildRecords[0]; index: number 
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`View ${record.project} on GitHub`}
-          className="shrink-0 text-slate-600 hover:text-[#8EB69B] transition-colors focus:outline-none focus:ring-2 focus:ring-[#8EB69B] rounded p-1"
+          className="shrink-0 text-slate-500 hover:text-[#F05A17] transition-colors focus:outline-none focus:ring-2 focus:ring-[#F05A17] rounded p-1"
         >
           <ExternalLink size={14} />
         </a>
       </div>
 
       {/* Build Artifacts */}
-      <div className="space-y-3 border-t border-[rgba(142,182,155,0.1)] pt-4">
+      <div className="space-y-3 border-t border-[#1D2125] pt-4">
         {record.artifacts.map((artifact) => (
           <div key={artifact.label} className="flex gap-3">
             <span
@@ -130,7 +126,7 @@ const BuildRecordCard: React.FC<{ record: typeof buildRecords[0]; index: number 
             >
               {artifact.label}
             </span>
-            <span className="text-[11px] text-slate-400 leading-snug">{artifact.value}</span>
+            <span className="text-[11px] text-[#A8A29C] leading-snug">{artifact.value}</span>
           </div>
         ))}
       </div>
@@ -144,11 +140,11 @@ export const EngineeringRecord: React.FC = () => {
   const { ref: titleRef, inView: titleInView } = useInViewAnimation(0.1);
 
   return (
-    <section id="engineering-record" className="py-24 relative overflow-hidden bg-[#051F20]">
+    <section id="engineering-record" className="py-24 relative overflow-hidden bg-[#03070B]">
       {/* Ambient glow */}
       <div
         className="absolute top-1/3 right-0 w-[500px] h-[500px] rounded-full pointer-events-none opacity-[0.04]"
-        style={{ background: 'radial-gradient(circle, #8EB69B 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, #F05A17 0%, transparent 70%)' }}
       />
 
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
@@ -158,8 +154,7 @@ export const EngineeringRecord: React.FC = () => {
           className={`mb-12 ${titleInView ? 'animate-fade-in-up' : 'opacity-0'}`}
         >
           <span
-            className="text-xs font-mono tracking-widest uppercase mb-2 block"
-            style={{ color: '#8EB69B' }}
+            className="text-xs font-mono tracking-widest uppercase mb-2 block text-[#F05A17]"
           >
             04 / BUILD RECORD
           </span>
@@ -167,7 +162,7 @@ export const EngineeringRecord: React.FC = () => {
             Systems Built,{' '}
             <span className="gradient-text">Decisions Documented.</span>
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 mt-2 max-w-xl font-sans">
+          <p className="text-xs sm:text-sm text-[#A8A29C] mt-2 max-w-xl font-sans">
             Architecture decisions, technology choices, and implementation patterns — pulled directly
             from the verified repositories. No inferred claims.
           </p>
@@ -182,13 +177,13 @@ export const EngineeringRecord: React.FC = () => {
         </div>
 
         {/* Source note */}
-        <p className="text-center text-[11px] font-mono text-slate-600 mt-10">
+        <p className="text-center text-[11px] font-mono text-slate-500 mt-10">
           All records sourced from{' '}
           <a
             href="https://github.com/sukhithms25"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-[#8EB69B] hover:text-[#DAF1DE] transition-colors underline decoration-[#8EB69B]/40"
+            className="text-[#F05A17] hover:text-[#E6E3DF] transition-colors underline decoration-[#F05A17]/40"
           >
             github.com/sukhithms25
           </a>

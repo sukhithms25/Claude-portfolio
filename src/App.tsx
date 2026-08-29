@@ -15,7 +15,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   return (
-    <div className="relative min-h-screen bg-[#051F20] text-slate-200 overflow-x-hidden">
+    <div className="relative min-h-screen bg-[#03070B] text-[#E6E3DF] overflow-x-hidden">
       {loading && <LoadingScreen onComplete={() => setLoading(false)} />}
 
       {/* Fixed Navbar */}

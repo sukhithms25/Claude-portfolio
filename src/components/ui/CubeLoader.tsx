@@ -10,49 +10,49 @@ export default function CubeLoader() {
         <div className='relative w-full h-full cube-preserve-3d cube-animate-spin'>
 
           {/* Internal Core */}
-          <div className='absolute inset-0 m-auto w-8 h-8 bg-white rounded-full blur-md shadow-[0_0_40px_rgba(255,255,255,0.8)] cube-animate-pulse-fast' />
+          <div className='absolute inset-0 m-auto w-8 h-8 bg-[#F05A17] rounded-full blur-md shadow-[0_0_30px_rgba(240,90,23,0.6)] cube-animate-pulse-fast' />
 
           {/* Front */}
           <div className='cube-side-wrapper cube-front'>
-            <div className='cube-face border-2' style={{ background: 'rgba(22,56,50,0.2)', borderColor: '#163832', boxShadow: '0 0 15px rgba(22,56,50,0.6)' }} />
+            <div className='cube-face border-2' style={{ background: 'rgba(16,20,24,0.6)', borderColor: '#1D2125', boxShadow: '0 0 15px rgba(0,0,0,0.8)' }} />
           </div>
 
           {/* Back */}
           <div className='cube-side-wrapper cube-back'>
-            <div className='cube-face border-2' style={{ background: 'rgba(22,56,50,0.2)', borderColor: '#163832', boxShadow: '0 0 15px rgba(22,56,50,0.6)' }} />
+            <div className='cube-face border-2' style={{ background: 'rgba(16,20,24,0.6)', borderColor: '#1D2125', boxShadow: '0 0 15px rgba(0,0,0,0.8)' }} />
           </div>
 
           {/* Right */}
           <div className='cube-side-wrapper cube-right'>
-            <div className='cube-face border-2' style={{ background: 'rgba(142,182,155,0.1)', borderColor: '#8EB69B', boxShadow: '0 0 15px rgba(142,182,155,0.4)' }} />
+            <div className='cube-face border-2' style={{ background: 'rgba(29,33,37,0.4)', borderColor: '#1D2125', boxShadow: '0 0 15px rgba(240,90,23,0.15)' }} />
           </div>
 
           {/* Left */}
           <div className='cube-side-wrapper cube-left'>
-            <div className='cube-face border-2' style={{ background: 'rgba(142,182,155,0.1)', borderColor: '#8EB69B', boxShadow: '0 0 15px rgba(142,182,155,0.4)' }} />
+            <div className='cube-face border-2' style={{ background: 'rgba(29,33,37,0.4)', borderColor: '#1D2125', boxShadow: '0 0 15px rgba(240,90,23,0.15)' }} />
           </div>
 
           {/* Top */}
           <div className='cube-side-wrapper cube-top'>
-            <div className='cube-face border-2' style={{ background: 'rgba(218,241,222,0.05)', borderColor: '#DAF1DE', boxShadow: '0 0 15px rgba(218,241,222,0.3)' }} />
+            <div className='cube-face border-2' style={{ background: 'rgba(240,90,23,0.08)', borderColor: '#1D2125', boxShadow: '0 0 15px rgba(240,90,23,0.2)' }} />
           </div>
 
           {/* Bottom */}
           <div className='cube-side-wrapper cube-bottom'>
-            <div className='cube-face border-2' style={{ background: 'rgba(218,241,222,0.05)', borderColor: '#DAF1DE', boxShadow: '0 0 15px rgba(218,241,222,0.3)' }} />
+            <div className='cube-face border-2' style={{ background: 'rgba(240,90,23,0.08)', borderColor: '#1D2125', boxShadow: '0 0 15px rgba(240,90,23,0.2)' }} />
           </div>
         </div>
 
         {/* Floor Shadow */}
-        <div className='absolute -bottom-20 w-24 h-8 bg-black/40 blur-xl rounded-[100%] cube-animate-shadow-breathe' />
+        <div className='absolute -bottom-20 w-24 h-8 bg-black/60 blur-xl rounded-[100%] cube-animate-shadow-breathe' />
       </div>
 
       {/* Loading Text */}
       <div className='flex flex-col items-center gap-1 mt-2'>
-        <h3 className='text-sm font-semibold tracking-[0.3em] uppercase' style={{ color: '#8EB69B' }}>
+        <h3 className='text-sm font-semibold tracking-[0.3em] uppercase' style={{ color: '#F05A17' }}>
           Loading
         </h3>
-        <p className='text-xs text-slate-400'>
+        <p className='text-xs text-[#A8A29C]'>
           Preparing your experience, please wait...
         </p>
       </div>

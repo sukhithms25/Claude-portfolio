@@ -93,9 +93,7 @@ export const Footer: React.FC = () => {
                 target={href.startsWith('mailto') ? undefined : '_blank'}
                 rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
                 aria-label={ariaLabel}
-                className="transition-colors" style={{ color: '#235347' }}
-                onMouseEnter={e => (e.currentTarget.style.color = '#8EB69B')}
-                onMouseLeave={e => (e.currentTarget.style.color = '#235347')}
+                className="text-[#A8A29C] hover:text-[#F05A17] transition-colors"
               >
                 <Icon size={16} />
               </a>

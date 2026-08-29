@@ -51,19 +51,22 @@ export const Button: React.FC<ButtonProps> = ({
 
   const variantStyles: Record<string, React.CSSProperties> = {
     primary: {
-      background: 'linear-gradient(135deg, #163832 0%, #235347 60%, #8EB69B 100%)',
-      border: '1px solid rgba(142,182,155,0.3)',
-      boxShadow: '0 0 20px rgba(142,182,155,0.2), 0 4px 15px rgba(0,0,0,0.4)',
+      background: '#F05A17',
+      border: '1px solid #FF7A1A',
+      boxShadow: '0 0 15px rgba(240,90,23,0.25), 0 4px 15px rgba(0,0,0,0.5)',
+      color: '#FFFFFF',
     },
     secondary: {
-      background: 'rgba(35,83,71,0.3)',
-      border: '1px solid rgba(142,182,155,0.25)',
-      color: '#8EB69B',
+      background: '#101418',
+      border: '1px solid #1D2125',
+      color: '#E6E3DF',
     },
-    ghost: {},
+    ghost: {
+      color: '#A8A29C',
+    },
     outline: {
-      border: '1px solid rgba(142,182,155,0.2)',
-      color: '#8EB69B',
+      border: '1px solid #1D2125',
+      color: '#A8A29C',
     },
   };
 

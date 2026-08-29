@@ -164,17 +164,17 @@ export function AnimatedNavFramer() {
           role={!isExpanded ? "button" : undefined}
           className={cn(
             "relative flex items-center overflow-hidden rounded-full h-12",
-            "border border-[rgba(142,182,155,0.20)] bg-[#0B2B26]/88",
-            "backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.55)]",
+            "border border-[#1D2125] bg-[#0B0F13]/90",
+            "backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.7)]",
             !isExpanded && "cursor-pointer justify-center w-12"
           )}
         >
           {/* Brand mark */}
           <motion.div
             variants={logoVariants}
-            className="flex-shrink-0 flex items-center font-serif-accent text-xl font-bold pl-4 pr-2 text-[#DAF1DE] select-none"
+            className="flex-shrink-0 flex items-center font-serif-accent text-xl font-bold pl-4 pr-2 text-[#E6E3DF] select-none"
           >
-            <Navigation className="h-5 w-5 mr-1 text-[#8EB69B]" aria-hidden="true" />
+            <Navigation className="h-5 w-5 mr-1 text-[#F05A17]" aria-hidden="true" />
             <span>S</span>
           </motion.div>
 
@@ -208,11 +208,11 @@ export function AnimatedNavFramer() {
                   className={cn(
                     "text-xs font-medium px-3 py-1.5 rounded-full cursor-pointer",
                     "transition-all duration-200",
-                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8EB69B]",
-                    "focus-visible:ring-offset-1 focus-visible:ring-offset-[#0B2B26]",
+                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F05A17]",
+                    "focus-visible:ring-offset-1 focus-visible:ring-offset-[#0B0F13]",
                     active
-                      ? "bg-[#235347]/65 text-[#DAF1DE] shadow-[0_0_10px_rgba(142,182,155,0.22)]"
-                      : "text-[#8EB69B] hover:text-[#DAF1DE] hover:bg-white/5"
+                      ? "bg-[#F05A17]/15 text-[#E6E3DF] border border-[#F05A17]/30 shadow-[0_0_10px_rgba(240,90,23,0.15)]"
+                      : "text-[#A8A29C] hover:text-[#E6E3DF] hover:bg-white/5"
                   )}
                 >
                   {item.name}
@@ -229,7 +229,7 @@ export function AnimatedNavFramer() {
               className={cn(
                 "ml-2 flex items-center gap-1.5 px-4 py-1.5 rounded-full",
                 "btn-primary text-white text-xs font-medium shrink-0",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#DAF1DE]"
+                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F05A17]"
               )}
             >
               <Mail size={12} aria-hidden="true" />
@@ -243,7 +243,7 @@ export function AnimatedNavFramer() {
               variants={menuIconVariants}
               animate={isExpanded ? "expanded" : "collapsed"}
             >
-              <Menu className="h-5 w-5 text-[#DAF1DE]" aria-hidden="true" />
+              <Menu className="h-5 w-5 text-[#E6E3DF]" aria-hidden="true" />
             </motion.div>
           </div>
         </motion.div>
@@ -256,15 +256,15 @@ export function AnimatedNavFramer() {
           className={cn(
             "fixed top-4 left-0 right-0 mx-4 z-50",
             "flex items-center justify-between px-5 py-3 rounded-2xl",
-            "glass-dark border border-[rgba(142,182,155,0.15)] shadow-lg"
+            "glass-dark border border-[#1D2125] shadow-lg"
           )}
         >
           <button
             onClick={() => scrollTo("home")}
-            className="font-serif-accent text-lg font-semibold text-[#DAF1DE] flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8EB69B] rounded"
+            className="font-serif-accent text-lg font-semibold text-[#E6E3DF] flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F05A17] rounded"
             aria-label="Go to top"
           >
-            <Navigation className="h-4 w-4 text-[#8EB69B]" aria-hidden="true" />
+            <Navigation className="h-4 w-4 text-[#F05A17]" aria-hidden="true" />
             Sukhith M S
           </button>
 
@@ -275,8 +275,8 @@ export function AnimatedNavFramer() {
             aria-controls="mobile-nav-overlay"
             className={cn(
               "p-2 rounded-lg transition-colors",
-              "text-[#8EB69B] hover:text-[#DAF1DE]",
-              "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8EB69B]"
+              "text-[#A8A29C] hover:text-[#E6E3DF]",
+              "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F05A17]"
             )}
           >
             {mobileOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
@@ -295,7 +295,7 @@ export function AnimatedNavFramer() {
               initial="hidden"
               animate="visible"
               exit="exit"
-              className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-[#051F20]/97 backdrop-blur-xl"
+              className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-[#03070B]/98 backdrop-blur-xl"
             >
               {/* Tap-outside-to-close backdrop */}
               <div
@@ -307,7 +307,7 @@ export function AnimatedNavFramer() {
               {/* Menu items */}
               <div className="relative z-10 flex flex-col items-center gap-4">
                 {/* Active section indicator */}
-                <p className="text-[10px] font-mono tracking-widest text-[#8EB69B]/50 uppercase mb-2">
+                <p className="text-[10px] font-mono tracking-widest text-[#A8A29C]/50 uppercase mb-2">
                   Navigate
                 </p>
 
@@ -325,16 +325,16 @@ export function AnimatedNavFramer() {
                       aria-current={active ? "page" : undefined}
                       className={cn(
                         "text-3xl font-serif-accent font-medium transition-colors px-6 py-1.5 rounded-xl",
-                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#8EB69B]",
+                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F05A17]",
                         active
-                          ? "text-[#DAF1DE]"
-                          : "text-[#8EB69B] hover:text-[#DAF1DE]"
+                          ? "text-[#F05A17]"
+                          : "text-[#A8A29C] hover:text-[#E6E3DF]"
                       )}
                     >
                       {/* Active dot indicator */}
                       <span className="flex items-center gap-3">
                         {active && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#DAF1DE] inline-block" aria-hidden="true" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#F05A17] inline-block" aria-hidden="true" />
                         )}
                         {name}
                       </span>
@@ -354,7 +354,7 @@ export function AnimatedNavFramer() {
                   className={cn(
                     "mt-6 flex items-center gap-2.5 px-8 py-3 rounded-full",
                     "btn-primary text-white text-base font-medium",
-                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#DAF1DE]"
+                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F05A17]"
                   )}
                 >
                   <Mail size={16} aria-hidden="true" />

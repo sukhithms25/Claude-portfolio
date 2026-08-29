@@ -23,7 +23,7 @@ const skillGroups = [
     id: 'ai-agents',
     label: '01 / AI & AGENT SYSTEMS',
     icon: Cpu,
-    accentColor: '#8EB69B',
+    accentColor: '#F05A17',
     description: 'Applied in ULTRON (local LLM kernel), GIT_AI (agent pipeline), and CAPA (multi-agent MCP system).',
     skills: [
       'Python',
@@ -40,7 +40,7 @@ const skillGroups = [
     id: 'backend-apis',
     label: '02 / BACKEND & APIs',
     icon: Server,
-    accentColor: '#DAF1DE',
+    accentColor: '#E6E3DF',
     description: 'Applied in Krishi-Setu (FastAPI production backend) and ULTRON (specter-core FastAPI kernel).',
     skills: [
       'FastAPI',
@@ -56,7 +56,7 @@ const skillGroups = [
     id: 'databases',
     label: '03 / DATABASES & STORAGE',
     icon: Database,
-    accentColor: '#8EB69B',
+    accentColor: '#F05A17',
     description: 'Applied in Krishi-Setu (PostgreSQL + PostGIS), ULTRON memory engine (SQLite), and CAPA (SQLite context store).',
     skills: [
       'PostgreSQL',
@@ -71,7 +71,7 @@ const skillGroups = [
     id: 'frontend',
     label: '04 / FRONTEND',
     icon: Globe,
-    accentColor: '#DAF1DE',
+    accentColor: '#E6E3DF',
     description: 'Applied in this portfolio (TypeScript + React + Vite) and specter-dashboard (ULTRON workspace UI).',
     skills: [
       'TypeScript',
@@ -85,7 +85,7 @@ const skillGroups = [
     id: 'devops-infra',
     label: '05 / DEVOPS & INFRASTRUCTURE',
     icon: GitBranch,
-    accentColor: '#8EB69B',
+    accentColor: '#F05A17',
     description: 'Applied in ULTRON (Docker containerization, specter-core/docker directory) and GIT_AI (Git automation pipeline).',
     skills: [
       'Docker',
@@ -99,7 +99,7 @@ const skillGroups = [
     id: 'engineering-concepts',
     label: '06 / ENGINEERING CONCEPTS',
     icon: Code2,
-    accentColor: '#DAF1DE',
+    accentColor: '#E6E3DF',
     description: 'Architectural patterns and protocols implemented directly in the verified project set.',
     skills: [
       'Event-Driven Architecture',
@@ -126,7 +126,7 @@ const SkillGroupCard: React.FC<{ group: typeof skillGroups[0]; index: number }> 
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
-      className={`rounded-2xl glass-dark border border-[rgba(142,182,155,0.18)] hover:border-[rgba(142,182,155,0.35)] transition-all duration-300 p-6 flex flex-col gap-4 ${
+      className={`rounded-2xl glass-dark border border-[#1D2125] hover:border-[#F05A17]/40 transition-all duration-300 p-6 flex flex-col gap-4 ${
         inView ? 'animate-scale-in' : 'opacity-0'
       }`}
       style={{ animationDelay: `${index * 0.1}s` }}
@@ -139,11 +139,11 @@ const SkillGroupCard: React.FC<{ group: typeof skillGroups[0]; index: number }> 
         >
           {group.label}
         </span>
-        <IconComp size={16} style={{ color: group.accentColor }} className="shrink-0 opacity-70" />
+        <IconComp size={16} style={{ color: group.accentColor }} className="shrink-0 opacity-80" />
       </div>
 
       {/* Evidence Footnote */}
-      <p className="text-[11px] text-slate-500 leading-snug font-mono border-l-2 border-[rgba(142,182,155,0.2)] pl-3">
+      <p className="text-[11px] text-slate-500 leading-snug font-mono border-l-2 border-[#1D2125] pl-3">
         {group.description}
       </p>
 
@@ -152,7 +152,7 @@ const SkillGroupCard: React.FC<{ group: typeof skillGroups[0]; index: number }> 
         {group.skills.map((skill) => (
           <span
             key={skill}
-            className="px-2.5 py-1 rounded text-[11px] font-mono font-medium bg-[#163832]/70 text-[#DAF1DE] border border-[rgba(142,182,155,0.2)] hover:border-[rgba(142,182,155,0.5)] transition-colors duration-200"
+            className="px-2.5 py-1 rounded text-[11px] font-mono font-medium bg-[#101418] text-[#E6E3DF] border border-[#1D2125] hover:border-[#F05A17] hover:bg-[#1D2125] transition-colors duration-200"
           >
             {skill}
           </span>
@@ -168,11 +168,11 @@ export const SkillsSection: React.FC = () => {
   const { ref: titleRef, inView: titleInView } = useInViewAnimation(0.1);
 
   return (
-    <section id="skills" className="py-24 relative overflow-hidden bg-[#051F20]">
+    <section id="skills" className="py-24 relative overflow-hidden bg-[#03070B]">
       {/* Ambient glow */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none opacity-5"
-        style={{ background: 'radial-gradient(circle, #235347 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, #F05A17 0%, transparent 70%)' }}
       />
 
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
@@ -182,17 +182,16 @@ export const SkillsSection: React.FC = () => {
           className={`mb-12 ${titleInView ? 'animate-fade-in-up' : 'opacity-0'}`}
         >
           <span
-            className="text-xs font-mono tracking-widest uppercase mb-2 block"
-            style={{ color: '#8EB69B' }}
+            className="text-xs font-mono tracking-widest uppercase mb-2 block text-[#F05A17]"
           >
             03 / ENGINEERING STACK
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif-accent font-semibold text-white tracking-tight">
             Technology Used to <span className="gradient-text">Build Systems</span>
           </h2>
-          <p className="text-xs sm:text-sm text-slate-400 mt-2 max-w-xl font-sans">
+          <p className="text-xs sm:text-sm text-[#A8A29C] mt-2 max-w-xl font-sans">
             Every technology below is verified against a specific implementation in the{' '}
-            <a href="#projects" className="underline decoration-[#8EB69B]/50 hover:text-[#DAF1DE] transition-colors">
+            <a href="#projects" className="underline decoration-[#F05A17]/50 hover:text-[#E6E3DF] transition-colors">
               projects section
             </a>
             . No skill dumping.
@@ -208,9 +207,9 @@ export const SkillsSection: React.FC = () => {
         </div>
 
         {/* Bottom disclaimer */}
-        <p className="text-center text-[11px] font-mono text-slate-600 mt-10">
+        <p className="text-center text-[11px] font-mono text-slate-500 mt-10">
           Proficiency percentages removed — evidence is in the{' '}
-          <a href="#projects" className="text-[#8EB69B] hover:text-[#DAF1DE] transition-colors underline decoration-[#8EB69B]/40">
+          <a href="#projects" className="text-[#F05A17] hover:text-[#E6E3DF] transition-colors underline decoration-[#F05A17]/40">
             Engineering Showcase
           </a>
           .

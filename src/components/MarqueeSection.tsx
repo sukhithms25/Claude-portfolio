@@ -32,8 +32,7 @@ const allItems = [...techItems, ...techItems];
 
 const Dot: React.FC = () => (
   <span
-    className="inline-block w-1 h-1 rounded-full mx-6 shrink-0"
-    style={{ background: 'rgba(142,182,155,0.4)' }}
+    className="inline-block w-1 h-1 rounded-full mx-6 shrink-0 bg-[#1D2125]"
   />
 );
 
@@ -43,14 +42,14 @@ export const MarqueeSection: React.FC = () => {
       className="py-0 overflow-hidden relative"
       aria-label="Verified technology stack"
     >
-      {/* Edge fade masks — using correct bg colour */}
+      {/* Edge fade masks */}
       <div
         className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to right, #051F20, transparent)' }}
+        style={{ background: 'linear-gradient(to right, #03070B, transparent)' }}
       />
       <div
         className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-        style={{ background: 'linear-gradient(to left, #051F20, transparent)' }}
+        style={{ background: 'linear-gradient(to left, #03070B, transparent)' }}
       />
 
       {/* Marquee strip */}
@@ -61,12 +60,11 @@ export const MarqueeSection: React.FC = () => {
         {allItems.map((item, i) => (
           <React.Fragment key={i}>
             <div className="flex items-center shrink-0">
-              <span className="text-[13px] font-mono font-medium text-[#DAF1DE]">
+              <span className="text-[13px] font-mono font-medium text-[#E6E3DF]">
                 {item.label}
               </span>
               <span
-                className="ml-2 text-[9px] font-mono uppercase tracking-widest px-1.5 py-0.5 rounded"
-                style={{ color: '#8EB69B', background: 'rgba(142,182,155,0.1)' }}
+                className="ml-2 text-[9px] font-mono uppercase tracking-widest px-1.5 py-0.5 rounded border border-[#1D2125] text-[#A8A29C] bg-[#101418]"
               >
                 {item.tag}
               </span>

@@ -97,9 +97,8 @@ const secondaryProjects = [
     outcomes: ['Autonomous PR Creation', 'AST Context Reduction', 'GitHub REST API Integration'],
     tech: ['Python', 'GitHub REST API', 'LLM Runtimes', 'AST Parsing', 'Git Automation'],
     icon: Zap,
-    // NOTE: GIT_AI repo is not yet public — links to profile until repo is made public
     github: 'https://github.com/sukhithms25',
-    accentColor: '#DAF1DE',
+    accentColor: '#F05A17',
   },
   {
     id: 'capa',
@@ -118,9 +117,8 @@ const secondaryProjects = [
     outcomes: ['3 MCP Servers Built', 'Unified SQLite Memory', 'Cross-Domain Agent Sync'],
     tech: ['Python', 'Multi-Agent Architecture', 'MCP Servers', 'SQLite', 'Context Management'],
     icon: Globe,
-    // NOTE: CAPA repo is not yet public — links to profile until repo is made public
     github: 'https://github.com/sukhithms25',
-    accentColor: '#8EB69B',
+    accentColor: '#E6E3DF',
   },
   {
     id: 'krishi-setu',
@@ -139,9 +137,8 @@ const secondaryProjects = [
     outcomes: ['Geospatial Radius Queries', 'JWT Auth Pipeline', 'PostgreSQL Schema'],
     tech: ['FastAPI', 'PostgreSQL', 'JWT Auth', 'Python', 'Geospatial PostGIS', 'REST APIs'],
     icon: Database,
-    // NOTE: Krishi-Setu repo is not yet public — links to profile until repo is made public
     github: 'https://github.com/sukhithms25',
-    accentColor: '#DAF1DE',
+    accentColor: '#F05A17',
   },
 ];
 
@@ -154,19 +151,19 @@ const UltronCard: React.FC = () => {
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
-      className={`relative rounded-3xl glass-dark border border-[rgba(142,182,155,0.3)] shadow-[0_12px_40px_rgba(0,0,0,0.6)] overflow-hidden transition-all duration-500 mb-16 ${
+      className={`relative rounded-3xl glass-dark border border-[#1D2125] shadow-[0_12px_40px_rgba(0,0,0,0.8)] overflow-hidden transition-all duration-500 mb-16 ${
         inView ? 'animate-fade-in-up' : 'opacity-0'
       }`}
     >
       {/* Top Banner & Flagship Indicator */}
-      <div className="bg-gradient-to-r from-[#0B2B26] via-[#163832] to-[#0B2B26] px-6 py-4 border-b border-[rgba(142,182,155,0.2)] flex flex-wrap items-center justify-between gap-3">
+      <div className="bg-[#0B0F13] px-6 py-4 border-b border-[#1D2125] flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <span className="flex h-2.5 w-2.5 rounded-full bg-[#DAF1DE] animate-pulse" />
-          <span className="font-mono text-xs font-bold tracking-widest text-[#DAF1DE]">
+          <span className="flex h-2.5 w-2.5 rounded-full bg-[#F05A17] animate-pulse" />
+          <span className="font-mono text-xs font-bold tracking-widest text-[#E6E3DF]">
             {ultronData.badge}
           </span>
         </div>
-        <span className="font-mono text-xs text-[#8EB69B] glass px-3 py-1 rounded-full border border-[rgba(142,182,155,0.2)]">
+        <span className="font-mono text-xs text-[#A8A29C] bg-[#101418] px-3 py-1 rounded-full border border-[#1D2125]">
           01 / FLAGSHIP ARCHITECTURE
         </span>
       </div>
@@ -176,17 +173,17 @@ const UltronCard: React.FC = () => {
         {/* Left Column (Info & Proofs) - 7 cols */}
         <div className="lg:col-span-7 flex flex-col justify-between">
           <div>
-            <h3 className="text-3xl sm:text-4xl md:text-5xl font-serif-accent font-bold text-[#DAF1DE] mb-2 tracking-tight">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-serif-accent font-bold text-[#E6E3DF] mb-2 tracking-tight">
               {ultronData.name}
             </h3>
-            <p className="font-mono text-sm sm:text-base text-[#8EB69B] mb-6 font-medium">
+            <p className="font-mono text-sm sm:text-base text-[#A8A29C] mb-6 font-medium">
               {ultronData.tagline}
             </p>
 
             {/* Problem & Solution Blocks */}
             <div className="space-y-4 mb-6">
-              <div className="p-4 rounded-xl glass border border-[rgba(142,182,155,0.15)]">
-                <span className="text-xs font-mono text-slate-400 font-semibold block mb-1 uppercase tracking-wider">
+              <div className="p-4 rounded-xl glass border border-[#1D2125]">
+                <span className="text-xs font-mono text-[#A8A29C] font-semibold block mb-1 uppercase tracking-wider">
                   The Engineering Problem
                 </span>
                 <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
@@ -194,11 +191,11 @@ const UltronCard: React.FC = () => {
                 </p>
               </div>
 
-              <div className="p-4 rounded-xl glass border border-[rgba(142,182,155,0.25)] bg-[#0B2B26]/40">
-                <span className="text-xs font-mono text-[#8EB69B] font-semibold block mb-1 uppercase tracking-wider">
+              <div className="p-4 rounded-xl glass border border-[#1D2125] bg-[#101418]">
+                <span className="text-xs font-mono text-[#F05A17] font-semibold block mb-1 uppercase tracking-wider">
                   The System Solution
                 </span>
-                <p className="text-xs sm:text-sm text-[#DAF1DE] leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#E6E3DF] leading-relaxed">
                   {ultronData.solution}
                 </p>
               </div>
@@ -209,12 +206,12 @@ const UltronCard: React.FC = () => {
               {ultronData.outcomes.map((o) => (
                 <div
                   key={o.metric}
-                  className="p-3 rounded-xl glass text-center border border-[rgba(142,182,155,0.15)]"
+                  className="p-3 rounded-xl glass text-center border border-[#1D2125]"
                 >
-                  <div className="text-xs sm:text-sm font-bold text-[#DAF1DE] font-mono">
+                  <div className="text-xs sm:text-sm font-bold text-[#E6E3DF] font-mono">
                     {o.metric}
                   </div>
-                  <div className="text-[10px] sm:text-xs text-slate-400 font-sans mt-0.5">
+                  <div className="text-[10px] sm:text-xs text-[#A8A29C] font-sans mt-0.5">
                     {o.label}
                   </div>
                 </div>
@@ -226,7 +223,7 @@ const UltronCard: React.FC = () => {
               {ultronData.tech.map((t) => (
                 <span
                   key={t}
-                  className="px-2.5 py-1 rounded-md text-xs font-mono bg-[#163832]/60 text-[#8EB69B] border border-[rgba(142,182,155,0.2)]"
+                  className="px-2.5 py-1 rounded-md text-xs font-mono bg-[#101418] text-[#A8A29C] border border-[#1D2125]"
                 >
                   {t}
                 </span>
@@ -260,44 +257,40 @@ const UltronCard: React.FC = () => {
 
         {/* Right Column: Architecture Diagram — 5 cols */}
         <div className="lg:col-span-5 flex flex-col">
-          <div className="relative h-full min-h-[260px] lg:min-h-[360px] rounded-2xl overflow-hidden glass border border-[rgba(142,182,155,0.2)]">
-            {/* Inline architecture visualization — replaces motionsites.ai third-party GIF */}
+          <div className="relative h-full min-h-[260px] lg:min-h-[360px] rounded-2xl overflow-hidden glass border border-[#1D2125]">
+            {/* Inline architecture visualization */}
             <div className="w-full h-full flex flex-col justify-center gap-3 p-6">
-              <p className="text-[10px] font-mono text-[#8EB69B] uppercase tracking-widest mb-1">System Architecture</p>
+              <p className="text-[10px] font-mono text-[#F05A17] uppercase tracking-widest mb-1">System Architecture</p>
               {[
-                { layer: '01', label: 'Core Runtime', detail: 'DI Container · Event Bus · Telemetry', color: '#DAF1DE' },
-                { layer: '02', label: 'Memory Engine', detail: 'SQLite · LRU Cache · Session Store', color: '#8EB69B' },
-                { layer: '03', label: 'Tool Orchestrator', detail: 'MCP Bridge · Tool Discovery · Sandbox', color: '#DAF1DE' },
-                { layer: '04', label: 'API Gateway', detail: 'FastAPI · WebSocket · REST Endpoints', color: '#8EB69B' },
-              ].map((item, i) => (
+                { layer: '01', label: 'Core Runtime', detail: 'DI Container · Event Bus · Telemetry', color: '#F05A17' },
+                { layer: '02', label: 'Memory Engine', detail: 'SQLite · LRU Cache · Session Store', color: '#E6E3DF' },
+                { layer: '03', label: 'Tool Orchestrator', detail: 'MCP Bridge · Tool Discovery · Sandbox', color: '#F05A17' },
+                { layer: '04', label: 'API Gateway', detail: 'FastAPI · WebSocket · REST Endpoints', color: '#E6E3DF' },
+              ].map((item) => (
                 <div key={item.layer} className="flex items-center gap-3">
                   <span className="text-[9px] font-mono shrink-0 w-5" style={{ color: item.color }}>{item.layer}</span>
-                  <div className="flex-1 rounded-lg px-3 py-2 border text-left"
-                    style={{ background: `${item.color}08`, borderColor: `${item.color}25` }}>
+                  <div className="flex-1 rounded-lg px-3 py-2 border text-left bg-[#101418] border-[#1D2125]">
                     <div className="text-[11px] font-mono font-bold" style={{ color: item.color }}>{item.label}</div>
-                    <div className="text-[10px] text-slate-500 mt-0.5">{item.detail}</div>
+                    <div className="text-[10px] text-[#A8A29C] mt-0.5">{item.detail}</div>
                   </div>
-                  {i < 3 && (
-                    <div className="absolute" style={{ display: 'none' }} />
-                  )}
                 </div>
               ))}
-              <p className="text-[9px] font-mono text-slate-600 mt-2">24-module kernel · Local-first inference · Zero cloud dependency</p>
+              <p className="text-[9px] font-mono text-slate-500 mt-2">24-module kernel · Local-first inference · Zero cloud dependency</p>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-[#051F20]/20 via-transparent to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#03070B]/40 via-transparent to-transparent pointer-events-none" />
           </div>
         </div>
       </div>
 
       {/* Expandable System Architecture Drawer */}
       {showArchitecture && (
-        <div className="p-6 md:p-10 bg-[#051F20]/90 border-t border-[rgba(142,182,155,0.25)] animate-fade-in">
+        <div className="p-6 md:p-10 bg-[#03070B] border-t border-[#1D2125] animate-fade-in">
           <div className="mb-6 flex items-center justify-between">
-            <h4 className="text-lg font-mono font-bold text-[#DAF1DE] flex items-center gap-2">
-              <Code2 size={18} className="text-[#8EB69B]" />
+            <h4 className="text-lg font-mono font-bold text-[#E6E3DF] flex items-center gap-2">
+              <Code2 size={18} className="text-[#F05A17]" />
               ULTRON Technical System Blueprint
             </h4>
-            <span className="text-xs font-mono text-slate-400">
+            <span className="text-xs font-mono text-[#A8A29C]">
               Architectural Rationale &amp; Layers
             </span>
           </div>
@@ -309,31 +302,31 @@ const UltronCard: React.FC = () => {
               return (
                 <div
                   key={arch.layer}
-                  className="p-4 rounded-xl glass border border-[rgba(142,182,155,0.2)] hover:border-[#8EB69B]/50 transition-colors"
+                  className="p-4 rounded-xl glass border border-[#1D2125] hover:border-[#F05A17]/40 transition-colors"
                 >
                   <div className="flex items-center justify-between mb-3">
-                    <span className="text-[10px] font-mono text-[#8EB69B]">{arch.layer}</span>
-                    <IconComp size={16} className="text-[#DAF1DE]" />
+                    <span className="text-[10px] font-mono text-[#F05A17]">{arch.layer}</span>
+                    <IconComp size={16} className="text-[#E6E3DF]" />
                   </div>
-                  <h5 className="text-sm font-bold text-[#DAF1DE] mb-1 font-sans">{arch.title}</h5>
-                  <p className="text-xs text-slate-400 leading-relaxed font-sans">{arch.description}</p>
+                  <h5 className="text-sm font-bold text-[#E6E3DF] mb-1 font-sans">{arch.title}</h5>
+                  <p className="text-xs text-[#A8A29C] leading-relaxed font-sans">{arch.description}</p>
                 </div>
               );
             })}
           </div>
 
           {/* Architectural Decisions & Tradeoffs */}
-          <div className="p-5 rounded-2xl glass border border-[rgba(142,182,155,0.15)]">
-            <h5 className="text-xs font-mono font-bold text-[#8EB69B] uppercase tracking-wider mb-3">
+          <div className="p-5 rounded-2xl glass border border-[#1D2125]">
+            <h5 className="text-xs font-mono font-bold text-[#F05A17] uppercase tracking-wider mb-3">
               Key Engineering Decisions &amp; Tradeoffs
             </h5>
             <div className="space-y-3">
               {ultronData.decisions.map((d) => (
                 <div key={d.title} className="flex items-start gap-2.5 text-xs text-slate-300">
-                  <CheckCircle2 size={14} className="text-[#8EB69B] shrink-0 mt-0.5" />
+                  <CheckCircle2 size={14} className="text-[#F05A17] shrink-0 mt-0.5" />
                   <div>
-                    <span className="font-semibold text-[#DAF1DE] font-mono mr-2">{d.title}:</span>
-                    <span className="text-slate-300 font-sans">{d.rationale}</span>
+                    <span className="font-semibold text-[#E6E3DF] font-mono mr-2">{d.title}:</span>
+                    <span className="text-[#A8A29C] font-sans">{d.rationale}</span>
                   </div>
                 </div>
               ))}
@@ -357,17 +350,17 @@ const SecondaryCard: React.FC<{ project: typeof secondaryProjects[0]; index: num
   return (
     <div
       ref={ref as React.RefObject<HTMLDivElement>}
-      className={`rounded-2xl glass-dark border border-[rgba(142,182,155,0.2)] hover:border-[rgba(142,182,155,0.35)] transition-all duration-300 overflow-hidden flex flex-col justify-between ${
+      className={`rounded-2xl glass-dark border border-[#1D2125] hover:border-[#F05A17]/40 transition-all duration-300 overflow-hidden flex flex-col justify-between ${
         inView ? 'animate-fade-in-up' : 'opacity-0'
       }`}
       style={{ animationDelay: `${index * 0.15}s` }}
     >
       <div>
         {/* Header Strip */}
-        <div className="p-5 border-b border-[rgba(142,182,155,0.15)] flex items-center justify-between bg-[#0B2B26]/30">
+        <div className="p-5 border-b border-[#1D2125] flex items-center justify-between bg-[#0B0F13]">
           <div className="flex items-center gap-2">
             <IconComponent size={16} style={{ color: project.accentColor }} />
-            <span className="text-[11px] font-mono font-bold tracking-wider text-[#8EB69B]">
+            <span className="text-[11px] font-mono font-bold tracking-wider text-[#A8A29C]">
               {project.badge}
             </span>
           </div>
@@ -382,33 +375,33 @@ const SecondaryCard: React.FC<{ project: typeof secondaryProjects[0]; index: num
           >
             {project.name}
           </h3>
-          <p className="text-xs font-mono text-slate-400 mb-4">{project.tagline}</p>
+          <p className="text-xs font-mono text-[#A8A29C] mb-4">{project.tagline}</p>
 
           {/* Problem Block */}
-          <div className="mb-4 p-3 rounded-lg glass border border-[rgba(142,182,155,0.1)]">
-            <span className="text-[10px] font-mono text-slate-400 font-semibold block mb-1 uppercase">
+          <div className="mb-4 p-3 rounded-lg glass border border-[#1D2125]">
+            <span className="text-[10px] font-mono text-[#A8A29C] font-semibold block mb-1 uppercase">
               Problem
             </span>
             <p className="text-xs text-slate-300 leading-snug">{project.problem}</p>
           </div>
 
           {/* System Built Block */}
-          <div className="mb-4 p-3 rounded-lg glass border border-[rgba(142,182,155,0.15)] bg-[#0B2B26]/30">
-            <span className="text-[10px] font-mono text-[#8EB69B] font-semibold block mb-1 uppercase">
+          <div className="mb-4 p-3 rounded-lg glass border border-[#1D2125] bg-[#101418]">
+            <span className="text-[10px] font-mono text-[#F05A17] font-semibold block mb-1 uppercase">
               System Built
             </span>
-            <p className="text-xs text-[#DAF1DE] leading-snug">{project.systemBuilt}</p>
+            <p className="text-xs text-[#E6E3DF] leading-snug">{project.systemBuilt}</p>
           </div>
 
           {/* Key Technical Highlights */}
           <div className="mb-5 space-y-1.5">
-            <span className="text-[10px] font-mono text-slate-400 font-semibold block uppercase tracking-wider">
+            <span className="text-[10px] font-mono text-[#A8A29C] font-semibold block uppercase tracking-wider">
               Technical Highlights
             </span>
             {project.highlights.map((h, i) => (
               <div key={i} className="flex items-start gap-2 text-xs text-slate-300">
-                <ShieldCheck size={12} className="text-[#8EB69B] shrink-0 mt-0.5" />
-                <span className="text-slate-300">{h}</span>
+                <ShieldCheck size={12} className="text-[#F05A17] shrink-0 mt-0.5" />
+                <span className="text-[#A8A29C]">{h}</span>
               </div>
             ))}
           </div>
@@ -418,7 +411,7 @@ const SecondaryCard: React.FC<{ project: typeof secondaryProjects[0]; index: num
             {project.outcomes.map((o) => (
               <span
                 key={o}
-                className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#235347]/40 text-[#DAF1DE] border border-[rgba(142,182,155,0.2)]"
+                className="px-2 py-0.5 rounded text-[10px] font-mono bg-[#101418] text-[#E6E3DF] border border-[#1D2125]"
               >
                 ✓ {o}
               </span>
@@ -428,14 +421,14 @@ const SecondaryCard: React.FC<{ project: typeof secondaryProjects[0]; index: num
       </div>
 
       {/* Card Footer: Tech Stack & Actions */}
-      <div className="p-5 border-t border-[rgba(142,182,155,0.15)] bg-[#051F20]/50 flex items-center justify-between gap-3">
+      <div className="p-5 border-t border-[#1D2125] bg-[#0B0F13] flex items-center justify-between gap-3">
         <div className="flex flex-wrap gap-1">
           {project.tech.slice(0, 3).map((t) => (
-            <span key={t} className="text-[10px] font-mono text-slate-400">
+            <span key={t} className="text-[10px] font-mono text-[#A8A29C]">
               {t} •
             </span>
           ))}
-          <span className="text-[10px] font-mono text-[#8EB69B]">+{project.tech.length - 3}</span>
+          <span className="text-[10px] font-mono text-[#F05A17]">+{project.tech.length - 3}</span>
         </div>
 
         <Button
@@ -458,11 +451,11 @@ export const ProjectsSection: React.FC = () => {
   const { ref: titleRef, inView: titleInView } = useInViewAnimation(0.1);
 
   return (
-    <section id="projects" className="py-24 relative overflow-hidden bg-[#051F20]">
+    <section id="projects" className="py-24 relative overflow-hidden bg-[#03070B]">
       {/* Background Radial Glow */}
       <div
         className="absolute top-1/3 right-0 w-96 h-96 rounded-full opacity-5 pointer-events-none"
-        style={{ background: 'radial-gradient(circle, #8EB69B 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(circle, #F05A17 0%, transparent 70%)' }}
       />
 
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6">
@@ -472,15 +465,14 @@ export const ProjectsSection: React.FC = () => {
           className={`mb-12 ${titleInView ? 'animate-fade-in-up' : 'opacity-0'}`}
         >
           <span
-            className="text-xs font-mono tracking-widest uppercase mb-2 block"
-            style={{ color: '#8EB69B' }}
+            className="text-xs font-mono tracking-widest uppercase mb-2 block text-[#F05A17]"
           >
             02 / ENGINEERING SHOWCASE
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif-accent font-semibold text-white tracking-tight">
             Systems &amp; Flagship <span className="gradient-text">Projects</span>
           </h2>
-          <p className="text-sm sm:text-base text-slate-400 mt-2 max-w-xl font-sans">
+          <p className="text-sm sm:text-base text-[#A8A29C] mt-2 max-w-xl font-sans">
             Architecture-first systems built with autonomous AI agents, local runtimes, and
             production backends.
           </p>

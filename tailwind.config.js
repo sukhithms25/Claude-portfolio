@@ -12,22 +12,26 @@ export default {
         mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
       },
       colors: {
-        dark: {
-          DEFAULT: '#051F20',
-          50: '#0B2B26',
-          100: '#163832',
-          200: '#1a3d37',
-          300: '#235347',
-          400: '#2a6055',
-          500: '#3a7060',
+        background: '#03070B',
+        surface: {
+          DEFAULT: '#0B0F13',
+          elevated: '#101418',
         },
-        mg: {
-          bg:      '#051F20',
-          deep:    '#0B2B26',
-          forest:  '#163832',
-          mid:     '#235347',
-          sage:    '#8EB69B',
-          mint:    '#DAF1DE',
+        border: '#1D2125',
+        textPrimary: '#E6E3DF',
+        textSecondary: '#A8A29C',
+        accent: {
+          DEFAULT: '#F05A17',
+          hover: '#FF7A1A',
+        },
+        dark: {
+          DEFAULT: '#03070B',
+          50: '#0B0F13',
+          100: '#101418',
+          200: '#151A20',
+          300: '#1D2125',
+          400: '#2A3036',
+          500: '#3A424A',
         },
       },
       animation: {

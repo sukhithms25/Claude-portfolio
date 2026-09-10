@@ -83,7 +83,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   if (href) {
     return (
-      <a href={href} className={classes} style={inlineStyle} target="_blank" rel="noopener noreferrer">
+      <a href={href} onClick={onClick} className={classes} style={inlineStyle} target="_blank" rel="noopener noreferrer">
         {content}
       </a>
     );

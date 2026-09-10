@@ -1,370 +1,388 @@
-"use client";
+'use client';
 
 import * as React from "react";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useMotionValueEvent,
-} from "framer-motion";
-import type { Variants } from "framer-motion";
-import { Navigation, Menu, Mail, X } from "lucide-react";
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { 
+  Menu, 
+  X, 
+  User, 
+  FolderKanban, 
+  Terminal, 
+  Layers, 
+  FileText, 
+  Mail 
+} from "lucide-react";
 import { cn } from "@/lib/utils";
+import { isPostHogConfigured, posthog } from "@/lib/posthog";
 
-// ─── Nav Items ────────────────────────────────────────────────────────────────
+// Standard horizontal navigation items for top-of-page navbar
 const navItems = [
-  { name: "Home",     id: "home"     },
-  { name: "About",    id: "about"    },
-  { name: "Projects", id: "projects" },
-  { name: "Skills",   id: "skills"   },
-  { name: "Contact",  id: "contact"  },
+  { name: "About",      id: "about"              },
+  { name: "Projects",   id: "projects"           },
+  { name: "Experience", id: "engineering-record" },
+  { name: "Skills",     id: "skills"             },
+  { name: "Resume",     id: "resume", href: "/Sukhith_MS_Resume_Klanvision.pdf", download: true },
+  { name: "Contact",    id: "contact"            },
 ];
 
-// Pixel offset so smooth-scroll lands below the fixed nav bar (nav h-12 + top-6 + buffer)
-const NAV_SCROLL_OFFSET = 88;
+// 90° Arc Radial items — Exactly the 6 sections of your portfolio
+const radialItems = [
+  { name: "About",      id: "about",              icon: <User size={18} /> },
+  { name: "Projects",   id: "projects",           icon: <FolderKanban size={18} /> },
+  { name: "Experience", id: "engineering-record",  icon: <Terminal size={18} /> },
+  { name: "Skills",     id: "skills",             icon: <Layers size={18} /> },
+  { name: "Resume",     id: "resume",             icon: <FileText size={18} />, href: "/Sukhith_MS_Resume_Klanvision.pdf", download: true },
+  { name: "Contact",    id: "contact",            icon: <Mail size={18} /> },
+];
 
-// How far user must scroll UP before pill re-expands
-const EXPAND_THRESHOLD = 80;
+// Spacious arc radius for 6 items to prevent congestion
+const ARC_RADIUS = 180;
+const START_ANGLE_DEG = 4;
+const END_ANGLE_DEG = 86;
 
-// ─── Desktop pill variants ────────────────────────────────────────────────────
-const pillVariants: Variants = {
+const getArcCoordinate = (index: number, total: number) => {
+  const angleDeg = START_ANGLE_DEG + (index * (END_ANGLE_DEG - START_ANGLE_DEG)) / (total - 1);
+  const angleRad = (angleDeg * Math.PI) / 180;
+  return {
+    x: Math.round(ARC_RADIUS * Math.cos(angleRad)),
+    y: Math.round(ARC_RADIUS * Math.sin(angleRad)),
+  };
+};
+
+const wrapperVariants = {
   expanded: {
-    width: "auto",
+    left: "50%",
+    x: "-50%",
     transition: {
-      type: "spring", damping: 20, stiffness: 300,
-      staggerChildren: 0.07, delayChildren: 0.15,
+      type: "spring" as const,
+      damping: 24,
+      stiffness: 240,
     },
   },
   collapsed: {
-    width: "3rem",
+    left: "clamp(16px, 2.5vw, 28px)",
+    x: "0%",
     transition: {
-      type: "spring", damping: 20, stiffness: 300,
-      when: "afterChildren", staggerChildren: 0.05, staggerDirection: -1,
+      delay: 0.7, // As requested, delay until pill collapse finishes in center
+      type: "spring" as const,
+      damping: 24,
+      stiffness: 220,
     },
   },
 };
 
-const logoVariants: Variants = {
-  expanded:  { opacity: 1, x: 0,   rotate: 0,    transition: { type: "spring", damping: 15 } },
-  collapsed: { opacity: 0, x: -20, rotate: -180, transition: { duration: 0.25 } },
+const containerVariants = {
+  expanded: {
+    y: 0,
+    opacity: 1,
+    width: "auto",
+    rotate: 0,
+    transition: {
+      y: { type: "spring" as const, damping: 18, stiffness: 250 },
+      opacity: { duration: 0.25 },
+      width: { delay: 0.32, duration: 0.3, type: "spring" as const, damping: 22, stiffness: 260 },
+      rotate: { duration: 0.32, ease: "easeInOut" as const },
+      staggerChildren: 0.05,
+      delayChildren: 0.42,
+    },
+  },
+  collapsed: {
+    y: 0,
+    opacity: 1,
+    width: "3rem",
+    rotate: -360,
+    transition: {
+      width: { duration: 0.26, type: "spring" as const, damping: 20, stiffness: 280 },
+      rotate: { delay: 0.7, duration: 0.45, ease: "easeInOut" as const },
+      when: "afterChildren" as const,
+      staggerChildren: 0.03,
+      staggerDirection: -1 as const,
+    },
+  },
 };
 
-const linkVariants: Variants = {
-  expanded:  { opacity: 1, x: 0,   scale: 1,    transition: { type: "spring", damping: 15 } },
-  collapsed: { opacity: 0, x: -16, scale: 0.95, transition: { duration: 0.18 } },
+const itemVariants = {
+  expanded:  { opacity: 1, x: 0,   scale: 1,    transition: { type: "spring" as const, damping: 15 } },
+  collapsed: { opacity: 0, x: -12, scale: 0.92, transition: { duration: 0.12 } },
 };
 
-const menuIconVariants: Variants = {
-  expanded:  { opacity: 0, scale: 0.7, transition: { duration: 0.18 } },
-  collapsed: { opacity: 1, scale: 1,   transition: { type: "spring", damping: 15, stiffness: 300, delay: 0.12 } },
+const collapsedIconVariants = {
+  expanded:  { opacity: 0, scale: 0.7, rotate: 0, transition: { duration: 0.15 } },
+  collapsed: {
+    opacity: 1,
+    scale: 1,
+    rotate: 360,
+    transition: {
+      opacity: { delay: 0.15, duration: 0.15 },
+      scale: { delay: 0.15, type: "spring" as const, damping: 15 },
+      rotate: { delay: 0.7, duration: 0.45, ease: "easeInOut" as const },
+    },
+  },
 };
 
-// ─── Mobile overlay variants ──────────────────────────────────────────────────
-const backdropVariants: Variants = {
-  hidden:  { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.22 } },
-  exit:    { opacity: 0, transition: { duration: 0.2, delay: 0.08 } },
-};
-
-const mobileItemVariants: Variants = {
-  hidden:  { opacity: 0, y: 24 },
-  visible: (i: number) => ({
-    opacity: 1, y: 0,
-    transition: { type: "spring", damping: 16, stiffness: 220, delay: i * 0.06 },
-  }),
-  exit: (i: number) => ({
-    opacity: 0, y: -12,
-    transition: { duration: 0.14, delay: (navItems.length - i) * 0.04 },
-  }),
-};
-
-// ─── Component ────────────────────────────────────────────────────────────────
 export function AnimatedNavFramer() {
-  const [isExpanded,    setExpanded]    = React.useState(true);
-  const [activeSection, setActive]      = React.useState("home");
-  const [mobileOpen,    setMobileOpen]  = React.useState(false);
+  const [isExpanded, setExpanded] = React.useState(true);
+  const [isRadialOpen, setRadialOpen] = React.useState(false);
+  const [activeSection, setActive] = React.useState("home");
+  const [hoveredRadial, setHoveredRadial] = React.useState<number | null>(null);
 
-  const { scrollY }              = useScroll();
-  const lastScrollY              = React.useRef(0);
-  const collapseScrollPos        = React.useRef(0);
+  const { scrollY } = useScroll();
 
-  // ── Scroll spy + pill collapse ──────────────────────────────────────────────
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const prev = lastScrollY.current;
-
-    // Collapse when scrolling down past 150px
-    if (isExpanded && latest > prev && latest > 150) {
+    // As soon as user scrolls down past 40px, collapse into pill and move to top-left
+    if (latest > 40) {
       setExpanded(false);
-      collapseScrollPos.current = latest;
-    }
-    // Expand when user scrolls up > threshold
-    else if (!isExpanded && latest < prev && collapseScrollPos.current - latest > EXPAND_THRESHOLD) {
+    } else {
       setExpanded(true);
+      setRadialOpen(false); // Close radial menu when back at top
     }
 
-    lastScrollY.current = latest;
-
-    // Active section detection — offset matches NAV_SCROLL_OFFSET so highlight
-    // fires exactly when the section header clears the navbar
-    const scrollMid = latest + NAV_SCROLL_OFFSET + 32;
+    const mid = latest + 120;
     for (let i = navItems.length - 1; i >= 0; i--) {
       const el = document.getElementById(navItems[i].id);
-      if (el && el.offsetTop <= scrollMid) {
+      if (el && el.offsetTop <= mid) {
         setActive(navItems[i].id);
         break;
       }
     }
   });
 
-  // ── Smooth scroll with navbar clearance ─────────────────────────────────────
   const scrollTo = (id: string) => {
+    setRadialOpen(false);
     const el = document.getElementById(id);
     if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY - NAV_SCROLL_OFFSET;
+    const top = el.getBoundingClientRect().top + window.scrollY - 80;
     window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
-    setMobileOpen(false);
   };
 
-  // ── Keyboard: Escape closes mobile menu ─────────────────────────────────────
-  React.useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && mobileOpen) setMobileOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [mobileOpen]);
-
-  // ── Body scroll lock when mobile menu is open ────────────────────────────────
-  React.useEffect(() => {
-    document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [mobileOpen]);
-
-  // Clicking collapsed pill re-expands it
-  const handlePillClick = (e: React.MouseEvent) => {
+  const handleTriggerClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (!isExpanded) {
-      e.preventDefault();
-      setExpanded(true);
+      setRadialOpen((prev) => !prev);
     }
   };
 
   return (
-    <nav role="navigation" aria-label="Site navigation">
-      {/* ── Desktop / Tablet ───────────────────────────────────────────────── */}
-      <div className="fixed top-6 left-1/2 -translate-x-1/2 z-50 hidden md:block">
-        <motion.div
-          initial={{ y: -80, opacity: 0 }}
-          animate={["expanded", isExpanded ? "expanded" : "collapsed"]}
-          variants={pillVariants}
-          whileHover={!isExpanded ? { scale: 1.08 } : {}}
-          whileTap={!isExpanded  ? { scale: 0.95 } : {}}
-          onClick={handlePillClick}
-          aria-expanded={isExpanded}
-          aria-label={!isExpanded ? "Expand navigation" : undefined}
-          role={!isExpanded ? "button" : undefined}
-          className={cn(
-            "relative flex items-center overflow-hidden rounded-full h-12",
-            "border border-[#1D2125] bg-[#0B0F13]/90",
-            "backdrop-blur-md shadow-[0_8px_32px_rgba(0,0,0,0.7)]",
-            !isExpanded && "cursor-pointer justify-center w-12"
-          )}
-        >
-          {/* Brand mark */}
+    <>
+      {/* ── BACKDROP TO CLOSE RADIAL ON CLICK OUTSIDE ── */}
+      <AnimatePresence>
+        {isRadialOpen && !isExpanded && (
           <motion.div
-            variants={logoVariants}
-            className="flex-shrink-0 flex items-center font-serif-accent text-xl font-bold pl-4 pr-2 text-[#E6E3DF] select-none"
-          >
-            <Navigation className="h-5 w-5 mr-1 text-[#F05A17]" aria-hidden="true" />
-            <span>S</span>
-          </motion.div>
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={() => setRadialOpen(false)}
+            className="fixed inset-0 z-[998] bg-black/20 backdrop-blur-[2px]"
+          />
+        )}
+      </AnimatePresence>
 
-          {/* Links */}
-          <motion.div
-            className={cn(
-              "flex items-center gap-1 pr-2",
-              !isExpanded && "pointer-events-none select-none"
-            )}
-          >
-            {navItems.map((item) => {
-              const active = activeSection === item.id;
+      <motion.div
+        variants={wrapperVariants}
+        initial="expanded"
+        animate={isExpanded ? "expanded" : "collapsed"}
+        className="fixed top-6 z-[999]"
+      >
+        <div className="relative">
+          {/* ── 90° RADIAL SATELLITE ITEMS (Fan out downward and to the right) ── */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-40">
+            {radialItems.map((item, idx) => {
+              const { x, y } = getArcCoordinate(idx, radialItems.length);
+              const isHovered = hoveredRadial === idx;
+
               return (
-                <motion.a
-                  key={item.id}
-                  href={`#${item.id}`}
-                  variants={linkVariants}
-                  tabIndex={isExpanded ? 0 : -1}
-                  aria-current={active ? "page" : undefined}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    scrollTo(item.id);
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      scrollTo(item.id);
-                    }
-                  }}
-                  className={cn(
-                    "text-xs font-medium px-3 py-1.5 rounded-full cursor-pointer",
-                    "transition-all duration-200",
-                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F05A17]",
-                    "focus-visible:ring-offset-1 focus-visible:ring-offset-[#0B0F13]",
-                    active
-                      ? "bg-[#F05A17]/15 text-[#E6E3DF] border border-[#F05A17]/30 shadow-[0_0_10px_rgba(240,90,23,0.15)]"
-                      : "text-[#A8A29C] hover:text-[#E6E3DF] hover:bg-white/5"
-                  )}
+                <div
+                  key={item.name}
+                  className="absolute top-0 left-0"
                 >
-                  {item.name}
-                </motion.a>
+                  <motion.div
+                    initial={false}
+                    animate={{
+                      x: isRadialOpen && !isExpanded ? x : 0,
+                      y: isRadialOpen && !isExpanded ? y : 0,
+                      scale: isRadialOpen && !isExpanded ? 1 : 0,
+                      opacity: isRadialOpen && !isExpanded ? 1 : 0,
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 340,
+                      damping: 24,
+                      delay: isRadialOpen ? idx * 0.025 : (radialItems.length - 1 - idx) * 0.02,
+                    }}
+                    style={{
+                      pointerEvents: isRadialOpen && !isExpanded ? "auto" : "none",
+                    }}
+                    className="relative -top-5 -left-5"
+                  >
+                    {item.download ? (
+                      <a
+                        href={item.href}
+                        download
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          if (isPostHogConfigured) {
+                            posthog.capture('resume_downloaded', { navigation_variant: 'radial' });
+                          }
+                          setRadialOpen(false);
+                        }}
+                        onMouseEnter={() => setHoveredRadial(idx)}
+                        onMouseLeave={() => setHoveredRadial(null)}
+                        className={cn(
+                          "w-11 h-11 rounded-full flex items-center justify-center cursor-pointer shadow-lg backdrop-blur-md transition-all duration-150",
+                          // White background aesthetic
+                          "bg-white/95 border border-black/10 text-black shadow-[0_4px_20px_rgba(0,0,0,0.12)]",
+                          "hover:bg-[#E03D16] hover:text-white hover:border-[#E03D16] hover:scale-110"
+                        )}
+                        aria-label={item.name}
+                      >
+                        {item.icon}
+                        {isHovered && (
+                          <motion.span
+                            initial={{ opacity: 0, scale: 0.85, x: 4 }}
+                            animate={{ opacity: 1, scale: 1, x: 0 }}
+                            exit={{ opacity: 0, scale: 0.85 }}
+                            className="absolute left-full ml-2.5 px-2.5 py-1 rounded-md bg-white/95 text-black text-[10px] font-bold tracking-wider uppercase border border-black/10 shadow-xl whitespace-nowrap pointer-events-none"
+                          >
+                            {item.name}
+                          </motion.span>
+                        )}
+                      </a>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          scrollTo(item.id);
+                        }}
+                        onMouseEnter={() => setHoveredRadial(idx)}
+                        onMouseLeave={() => setHoveredRadial(null)}
+                        className={cn(
+                          "w-11 h-11 rounded-full flex items-center justify-center cursor-pointer shadow-lg backdrop-blur-md transition-all duration-150",
+                          // White background aesthetic
+                          "bg-white/95 border border-black/10 text-black shadow-[0_4px_20px_rgba(0,0,0,0.12)]",
+                          "hover:bg-[#E03D16] hover:text-white hover:border-[#E03D16] hover:scale-110"
+                        )}
+                        aria-label={item.name}
+                      >
+                        {item.icon}
+                        {isHovered && (
+                          <motion.span
+                            initial={{ opacity: 0, scale: 0.85, x: 4 }}
+                            animate={{ opacity: 1, scale: 1, x: 0 }}
+                            exit={{ opacity: 0, scale: 0.85 }}
+                            className="absolute left-full ml-2.5 px-2.5 py-1 rounded-md bg-white/95 text-black text-[10px] font-bold tracking-wider uppercase border border-black/10 shadow-xl whitespace-nowrap pointer-events-none"
+                          >
+                            {item.name}
+                          </motion.span>
+                        )}
+                      </button>
+                    )}
+                  </motion.div>
+                </div>
               );
             })}
-
-            {/* Hire Me */}
-            <motion.a
-              variants={linkVariants}
-              href="mailto:sukhithms25@gmail.com"
-              tabIndex={isExpanded ? 0 : -1}
-              onClick={(e) => e.stopPropagation()}
-              className={cn(
-                "ml-2 flex items-center gap-1.5 px-4 py-1.5 rounded-full",
-                "btn-primary text-white text-xs font-medium shrink-0",
-                "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F05A17]"
-              )}
-            >
-              <Mail size={12} aria-hidden="true" />
-              <span>Hire Me</span>
-            </motion.a>
-          </motion.div>
-
-          {/* Collapsed hamburger icon */}
-          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-            <motion.div
-              variants={menuIconVariants}
-              animate={isExpanded ? "expanded" : "collapsed"}
-            >
-              <Menu className="h-5 w-5 text-[#E6E3DF]" aria-hidden="true" />
-            </motion.div>
           </div>
-        </motion.div>
-      </div>
 
-      {/* ── Mobile ─────────────────────────────────────────────────────────── */}
-      <div className="md:hidden">
-        {/* Top bar */}
-        <div
-          className={cn(
-            "fixed top-4 left-0 right-0 mx-4 z-50",
-            "flex items-center justify-between px-5 py-3 rounded-2xl",
-            "glass-dark border border-[#1D2125] shadow-lg"
-          )}
-        >
-          <button
-            onClick={() => scrollTo("home")}
-            className="font-serif-accent text-lg font-semibold text-[#E6E3DF] flex items-center gap-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F05A17] rounded"
-            aria-label="Go to top"
-          >
-            <Navigation className="h-4 w-4 text-[#F05A17]" aria-hidden="true" />
-            Sukhith M S
-          </button>
-
-          <button
-            onClick={() => setMobileOpen((o) => !o)}
-            aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-nav-overlay"
+          {/* ── MAIN NAV / PILL TRIGGER (STAYS WHITE THROUGHOUT) ── */}
+          <motion.nav
+            initial={{ y: -80, opacity: 0 }}
+            animate={isExpanded ? "expanded" : "collapsed"}
+            variants={containerVariants}
+            whileHover={!isExpanded ? { scale: 1.08 } : {}}
+            whileTap={!isExpanded ? { scale: 0.95 } : {}}
+            onClick={handleTriggerClick}
             className={cn(
-              "p-2 rounded-lg transition-colors",
-              "text-[#A8A29C] hover:text-[#E6E3DF]",
-              "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F05A17]"
+              "relative flex items-center overflow-hidden rounded-full shadow-lg backdrop-blur-md h-12 transition-colors duration-200 z-50",
+              // Keep clean white styling in all states
+              isExpanded
+                ? "border border-black/10 bg-white/90 text-black"
+                : isRadialOpen
+                ? "cursor-pointer justify-center border border-black/15 bg-white text-black shadow-xl ring-2 ring-[#E03D16]/30"
+                : "cursor-pointer justify-center border border-black/10 bg-white/90 text-black hover:bg-white"
             )}
           >
-            {mobileOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
-          </button>
-        </div>
-
-        {/* Full-screen animated overlay */}
-        <AnimatePresence>
-          {mobileOpen && (
+            {/* Expanded items */}
             <motion.div
-              id="mobile-nav-overlay"
-              role="dialog"
-              aria-modal="true"
-              aria-label="Navigation menu"
-              variants={backdropVariants}
-              initial="hidden"
-              animate="visible"
-              exit="exit"
-              className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-[#03070B]/98 backdrop-blur-xl"
+              className={cn(
+                "flex items-center gap-0.5 sm:gap-1 px-4",
+                !isExpanded && "pointer-events-none"
+              )}
             >
-              {/* Tap-outside-to-close backdrop */}
-              <div
-                className="absolute inset-0"
-                onClick={() => setMobileOpen(false)}
-                aria-hidden="true"
-              />
-
-              {/* Menu items */}
-              <div className="relative z-10 flex flex-col items-center gap-4">
-                {/* Active section indicator */}
-                <p className="text-[10px] font-mono tracking-widest text-[#A8A29C]/50 uppercase mb-2">
-                  Navigate
-                </p>
-
-                {navItems.map(({ name, id }, i) => {
-                  const active = activeSection === id;
+              {navItems.map((item) => {
+                if (item.download) {
                   return (
-                    <motion.button
-                      key={id}
-                      custom={i}
-                      variants={mobileItemVariants}
-                      initial="hidden"
-                      animate="visible"
-                      exit="exit"
-                      onClick={() => scrollTo(id)}
-                      aria-current={active ? "page" : undefined}
-                      className={cn(
-                        "text-3xl font-serif-accent font-medium transition-colors px-6 py-1.5 rounded-xl",
-                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F05A17]",
-                        active
-                          ? "text-[#F05A17]"
-                          : "text-[#A8A29C] hover:text-[#E6E3DF]"
-                      )}
+                    <motion.a
+                      key={item.id}
+                      href={item.href}
+                      download
+                      variants={itemVariants}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (isPostHogConfigured) {
+                          posthog.capture('resume_downloaded', { navigation_variant: 'horizontal' });
+                        }
+                      }}
+                      className="text-[10px] sm:text-[11px] font-semibold tracking-[0.1em] text-black/70 hover:text-black transition-colors px-2 sm:px-3 py-1 uppercase whitespace-nowrap"
                     >
-                      {/* Active dot indicator */}
-                      <span className="flex items-center gap-3">
-                        {active && (
-                          <span className="w-1.5 h-1.5 rounded-full bg-[#F05A17] inline-block" aria-hidden="true" />
-                        )}
-                        {name}
-                      </span>
-                    </motion.button>
+                      {item.name}
+                    </motion.a>
                   );
-                })}
+                }
 
-                {/* Hire Me */}
-                <motion.a
-                  href="mailto:sukhithms25@gmail.com"
-                  custom={navItems.length}
-                  variants={mobileItemVariants}
-                  initial="hidden"
-                  animate="visible"
-                  exit="exit"
-                  onClick={() => setMobileOpen(false)}
-                  className={cn(
-                    "mt-6 flex items-center gap-2.5 px-8 py-3 rounded-full",
-                    "btn-primary text-white text-base font-medium",
-                    "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F05A17]"
-                  )}
-                >
-                  <Mail size={16} aria-hidden="true" />
-                  Hire Me
-                </motion.a>
-              </div>
+                const active = activeSection === item.id;
+                return (
+                  <motion.button
+                    key={item.id}
+                    variants={itemVariants}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      scrollTo(item.id);
+                    }}
+                    className={cn(
+                      "text-[10px] sm:text-[11px] font-semibold tracking-[0.1em] px-2 sm:px-3 py-1 uppercase whitespace-nowrap transition-colors",
+                      active ? "text-black" : "text-black/60 hover:text-black"
+                    )}
+                  >
+                    {item.name}
+                  </motion.button>
+                );
+              })}
             </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    </nav>
+
+            {/* Collapsed Trigger Icons (Cross-fade Menu <-> X in Black on White) */}
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <motion.div variants={collapsedIconVariants} animate={isExpanded ? "expanded" : "collapsed"}>
+                <AnimatePresence mode="wait" initial={false}>
+                  {isRadialOpen ? (
+                    <motion.div
+                      key="close-icon"
+                      initial={{ opacity: 0, rotate: -90, scale: 0.8 }}
+                      animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                      exit={{ opacity: 0, rotate: 90, scale: 0.8 }}
+                      transition={{ duration: 0.18 }}
+                    >
+                      <X className="h-5 w-5 text-black" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="menu-icon"
+                      initial={{ opacity: 0, rotate: 90, scale: 0.8 }}
+                      animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                      exit={{ opacity: 0, rotate: -90, scale: 0.8 }}
+                      transition={{ duration: 0.18 }}
+                    >
+                      <Menu className="h-5 w-5 text-black" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            </div>
+          </motion.nav>
+        </div>
+      </motion.div>
+    </>
   );
 }
+
+export { AnimatedNavFramer as Navbar };

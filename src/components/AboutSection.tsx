@@ -14,6 +14,7 @@ import {
 import { GithubIcon, LinkedinIcon } from './icons';
 import { useInViewAnimation } from '../hooks/useInViewAnimation';
 import { Button } from './Button';
+import { focusConversationSection } from './ContactSection';
 
 // ─── Data Definitions ────────────────────────────────────────────────────────
 
@@ -332,13 +333,14 @@ export const AboutSection: React.FC = () => {
         {/* 4. Supporting Links & Contact Path */}
         <div className="rounded-2xl glass-dark border border-[#1D2125] p-6 flex flex-wrap items-center justify-between gap-6">
           <div className="flex flex-wrap items-center gap-6">
-            <a
-              href="mailto:sukhithms25@gmail.com"
-              className="flex items-center gap-2 text-xs font-mono text-[#A8A29C] hover:text-[#E6E3DF] transition-colors"
+            <button
+              type="button"
+              onClick={focusConversationSection}
+              className="flex items-center gap-2 text-xs font-mono text-[#A8A29C] hover:text-[#E6E3DF] transition-colors cursor-pointer"
             >
               <Mail size={14} className="text-[#F05A17]" />
               sukhithms25@gmail.com
-            </a>
+            </button>
             <a
               href="https://github.com/sukhithms25"
               target="_blank"

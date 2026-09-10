@@ -10,6 +10,9 @@ export default {
         sans: ['PP Neue Montreal', 'Inter', 'Segoe UI', 'system-ui', '-apple-system', 'sans-serif'],
         serif: ['PP Mondwest', 'Georgia', 'serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'Consolas', 'monospace'],
+        condensed: ['Bebas Neue', 'Anton', 'Impact', 'sans-serif'],
+        bebas: ['Bebas Neue', 'sans-serif'],
+        anton: ['Anton', 'sans-serif'],
       },
       colors: {
         background: '#03070B',

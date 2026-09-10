@@ -1,10 +1,16 @@
 import React from 'react';
 import { Mail, ArrowUpRight, Heart } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from './icons';
+import { focusConversationSection } from './ContactSection';
 
 export const Footer: React.FC = () => {
   const scrollToSection = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleConversationClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    focusConversationSection();
   };
 
   return (
@@ -23,13 +29,14 @@ export const Footer: React.FC = () => {
             <p className="text-slate-400 text-sm max-w-xs leading-relaxed">
               Computer Science Engineer · MIT Mysore · Graduating 2027.
             </p>
-            <a
-              href="mailto:sukhithms25@gmail.com"
-              className="inline-flex items-center gap-2 mt-4 px-6 py-3 rounded-full btn-primary text-white text-sm font-medium"
+            <button
+              type="button"
+              onClick={handleConversationClick}
+              className="inline-flex items-center gap-2 mt-4 px-6 py-3 rounded-full btn-primary text-white text-sm font-medium cursor-pointer"
             >
               <Mail size={14} />
               Start a conversation
-            </a>
+            </button>
           </div>
 
           {/* Right: Links */}
@@ -45,7 +52,7 @@ export const Footer: React.FC = () => {
                 <button
                   key={id}
                   onClick={() => scrollToSection(id)}
-                  className="nav-link text-slate-400 hover:text-white transition-colors text-sm text-left"
+                  className="nav-link text-slate-400 hover:text-white transition-colors text-sm text-left cursor-pointer"
                 >
                   {label}
                 </button>
@@ -56,20 +63,35 @@ export const Footer: React.FC = () => {
               {[
                 { label: 'GitHub', href: 'https://github.com/sukhithms25' },
                 { label: 'LinkedIn', href: 'https://linkedin.com/in/sukhith-m-s-324487382' },
-                { label: 'Email', href: 'mailto:sukhithms25@gmail.com' },
-              ].map(({ label, href }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target={href.startsWith('mailto') ? undefined : '_blank'}
-                  rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                  aria-label={label}
-                  className="nav-link text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-1"
-                >
-                  {label}
-                  <ArrowUpRight size={12} className="opacity-50" />
-                </a>
-              ))}
+                { label: 'Email', isConversation: true },
+              ].map((item) => {
+                if ('isConversation' in item && item.isConversation) {
+                  return (
+                    <button
+                      key={item.label}
+                      type="button"
+                      onClick={handleConversationClick}
+                      className="nav-link text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-1 text-left cursor-pointer"
+                    >
+                      {item.label}
+                      <ArrowUpRight size={12} className="opacity-50" />
+                    </button>
+                  );
+                }
+                return (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={item.label}
+                    className="nav-link text-slate-400 hover:text-white transition-colors text-sm flex items-center gap-1"
+                  >
+                    {item.label}
+                    <ArrowUpRight size={12} className="opacity-50" />
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -82,22 +104,32 @@ export const Footer: React.FC = () => {
           </span>
           <span className="text-sm text-slate-600">Mysore, India · 2026</span>
           <div className="flex items-center gap-4">
-            {[
-              { Icon: GithubIcon, href: 'https://github.com/sukhithms25', ariaLabel: 'GitHub profile' },
-              { Icon: LinkedinIcon, href: 'https://linkedin.com/in/sukhith-m-s-324487382', ariaLabel: 'LinkedIn profile' },
-              { Icon: Mail, href: 'mailto:sukhithms25@gmail.com', ariaLabel: 'Send email' },
-            ].map(({ Icon, href, ariaLabel }) => (
-              <a
-                key={href}
-                href={href}
-                target={href.startsWith('mailto') ? undefined : '_blank'}
-                rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                aria-label={ariaLabel}
-                className="text-[#A8A29C] hover:text-[#F05A17] transition-colors"
-              >
-                <Icon size={16} />
-              </a>
-            ))}
+            <a
+              href="https://github.com/sukhithms25"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub profile"
+              className="text-[#A8A29C] hover:text-[#F05A17] transition-colors"
+            >
+              <GithubIcon size={16} />
+            </a>
+            <a
+              href="https://linkedin.com/in/sukhith-m-s-324487382"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn profile"
+              className="text-[#A8A29C] hover:text-[#F05A17] transition-colors"
+            >
+              <LinkedinIcon size={16} />
+            </a>
+            <button
+              type="button"
+              onClick={handleConversationClick}
+              aria-label="Start direct conversation"
+              className="text-[#A8A29C] hover:text-[#F05A17] transition-colors cursor-pointer"
+            >
+              <Mail size={16} />
+            </button>
           </div>
         </div>
       </div>

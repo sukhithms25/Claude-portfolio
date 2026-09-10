@@ -15,6 +15,7 @@ import {
 import { GithubIcon } from './icons';
 import { useInViewAnimation } from '../hooks/useInViewAnimation';
 import { Button } from './Button';
+import { isPostHogConfigured, posthog } from '../lib/posthog';
 
 // ─── Data Definitions ────────────────────────────────────────────────────────
 
@@ -236,6 +237,11 @@ const UltronCard: React.FC = () => {
             <Button
               variant="primary"
               href={ultronData.github}
+              onClick={() => {
+                if (isPostHogConfigured) {
+                  posthog.capture('project_repository_opened', { project_id: ultronData.id });
+                }
+              }}
               icon={<GithubIcon size={14} />}
               iconPosition="left"
               className="text-xs"
@@ -245,7 +251,13 @@ const UltronCard: React.FC = () => {
 
             <Button
               variant="secondary"
-              onClick={() => setShowArchitecture(!showArchitecture)}
+              onClick={() => {
+                const expanded = !showArchitecture;
+                if (isPostHogConfigured) {
+                  posthog.capture('project_architecture_toggled', { expanded });
+                }
+                setShowArchitecture(expanded);
+              }}
               icon={showArchitecture ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
               iconPosition="right"
               className="text-xs"
@@ -434,6 +446,11 @@ const SecondaryCard: React.FC<{ project: typeof secondaryProjects[0]; index: num
         <Button
           variant="secondary"
           href={project.github}
+          onClick={() => {
+            if (isPostHogConfigured) {
+              posthog.capture('project_repository_opened', { project_id: project.id });
+            }
+          }}
           icon={<GithubIcon size={12} />}
           iconPosition="left"
           className="text-xs py-1 px-3"

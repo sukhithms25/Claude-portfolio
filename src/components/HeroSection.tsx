@@ -1,299 +1,89 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Mail, Phone, ChevronDown, Cpu, ArrowRight, Layers } from 'lucide-react';
-import { GithubIcon, LinkedinIcon } from './icons';
-import { Button } from './Button';
-import { useInViewAnimation } from '../hooks/useInViewAnimation';
+import React from 'react';
 
 export const HeroSection: React.FC = () => {
-  const { ref, inView } = useInViewAnimation(0.1);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
 
-  // Ultra-subtle background particle canvas
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-
-    const particles: Array<{
-      x: number; y: number; vx: number; vy: number;
-      size: number; alpha: number; color: string;
-    }> = [];
-
-    const colors = ['#F05A17', '#A8A29C'];
-
-    const particleCount = window.innerWidth < 640 ? 20 : 35;
-
-    for (let i = 0; i < particleCount; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.2,
-        vy: (Math.random() - 0.5) * 0.2,
-        size: Math.random() * 1.5 + 0.5,
-        alpha: Math.random() * 0.2 + 0.05,
-        color: colors[Math.floor(Math.random() * colors.length)],
-      });
-    }
-
-    let animId: number;
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = p.color;
-        ctx.globalAlpha = p.alpha;
-        ctx.fill();
-      });
-      // Minimal translucent node connection lines
-      ctx.globalAlpha = 1;
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 80) {
-            ctx.beginPath();
-            ctx.moveTo(particles[i].x, particles[i].y);
-            ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(168, 162, 156, ${0.03 * (1 - dist / 80)})`;
-            ctx.lineWidth = 0.5;
-            ctx.stroke();
-          }
-        }
-      }
-      animId = requestAnimationFrame(animate);
-    };
-    animate();
-
-    const handleResize = () => {
-      canvas.width = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      cancelAnimationFrame(animId);
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  // Subtle cursor glow
-  useEffect(() => {
-    const handleMouse = (e: MouseEvent) => {
-      setCursorPos({ x: e.clientX, y: e.clientY });
-    };
-    window.addEventListener('mousemove', handleMouse);
-    return () => window.removeEventListener('mousemove', handleMouse);
-  }, []);
-
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
 
   return (
     <section
       id="home"
-      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden grid-bg bg-[#03070B]"
+      aria-label="Hero"
+      style={{
+        position: 'relative',
+        width: '100%',
+        height: '100svh',
+        minHeight: '600px',
+        maxHeight: '1000px',
+        overflow: 'hidden',
+        backgroundColor: '#EFEDEA',
+      }}
     >
-      {/* Low-opacity background canvas */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none"
-        style={{ zIndex: 0 }}
-      />
 
-      {/* Subtle cursor glow */}
-      <div
-        className="cursor-glow hidden md:block"
-        style={{ left: cursorPos.x, top: cursorPos.y }}
-      />
-
-      {/* Radial ambient glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
+      {/* ── LAYER 1: hero-bg.png — the full background composition ── */}
+      <img
+        aria-hidden="true"
+        src="/hero-bg.png"
+        alt=""
         style={{
-          background: 'radial-gradient(ellipse 65% 45% at 50% 40%, rgba(240,90,23,0.03) 0%, transparent 70%)',
-          zIndex: 0,
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          objectPosition: 'center center',
+          zIndex: 1,
+          pointerEvents: 'none',
+          userSelect: 'none',
         }}
       />
 
-      {/* Main Content */}
+      {/* ── LAYER 2: Transparent Portrait Cutout ── */}
+      <img
+        src="/portrait-transparent.png"
+        alt="Sukhith M S"
+        style={{
+          position: 'absolute',
+          right: 'clamp(0px, 1.5vw, 24px)',
+          bottom: 0,
+          height: '98%',
+          width: 'auto',
+          maxHeight: '100%',
+          objectFit: 'contain',
+          objectPosition: 'bottom right',
+          zIndex: 2,
+          pointerEvents: 'none',
+          userSelect: 'none',
+        }}
+      />
+
+      {/* ── SCROLL INDICATOR — sits above bg, below nav ── */}
       <div
-        ref={ref as React.RefObject<HTMLDivElement>}
-        className="relative z-10 text-center px-4 sm:px-6 max-w-4xl mx-auto pt-24 pb-16 flex flex-col items-center"
+        aria-hidden="true"
+        style={{
+          position: 'absolute',
+          bottom: '28px',
+          left: 'clamp(24px, 5vw, 72px)',
+          zIndex: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: '4px',
+          opacity: 0.45,
+        }}
       >
-        {/* Level 1: Position Badge */}
-        <div
-          className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass border border-[#1D2125] mb-6 text-xs font-mono tracking-wider text-[#A8A29C] ${
-            inView ? 'animate-fade-in-up' : 'opacity-0'
-          }`}
-          style={{ animationDelay: '0.1s' }}
-        >
-          <Cpu size={13} className="animate-pulse text-[#F05A17]" />
-          <span>ENGINEERING SYSTEMS &amp; AI ARCHITECTURE</span>
-          <span className="w-1.5 h-1.5 rounded-full animate-pulse bg-[#F05A17]" />
-        </div>
-
-        {/* Level 2: Primary Headline */}
-        <h1
-          className={`font-serif-accent text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-semibold tracking-tight mb-3 ${
-            inView ? 'animate-fade-in-up' : 'opacity-0'
-          }`}
-          style={{ animationDelay: '0.2s' }}
-        >
-          <span className="gradient-text">Sukhith M S</span>
-        </h1>
-
-        {/* Level 3: Defined Engineering Title */}
-        <p
-          className={`text-lg sm:text-2xl text-[#E6E3DF] mb-5 font-mono font-medium ${
-            inView ? 'animate-fade-in-up' : 'opacity-0'
-          }`}
-          style={{ animationDelay: '0.3s' }}
-        >
-          AI Systems &amp; Full-Stack Engineer
-        </p>
-
-        {/* Level 4: Concise Engineering Evidence Statement */}
-        <div
-          className={`text-sm sm:text-base md:text-lg text-[#A8A29C] leading-relaxed mb-8 max-w-2xl mx-auto font-sans ${
-            inView ? 'animate-fade-in-up' : 'opacity-0'
-          }`}
-          style={{ animationDelay: '0.4s' }}
-        >
-          <p className="mb-3">
-            Architecting <span className="text-[#E6E3DF] font-semibold">AI operating systems</span>,{' '}
-            <span className="text-[#E6E3DF] font-semibold">autonomous developer agents</span>, and{' '}
-            <span className="text-[#E6E3DF] font-semibold">production APIs</span>.
-          </p>
-
-          {/* Evidence pill strip */}
-          <div className="flex flex-wrap items-center justify-center gap-1.5 text-xs font-mono text-[#A8A29C] mt-2">
-            <span className="px-2.5 py-1 rounded-md bg-[#101418] border border-[#1D2125]">Multi-Agent Systems</span>
-            <span className="text-[#1D2125]">•</span>
-            <span className="px-2.5 py-1 rounded-md bg-[#101418] border border-[#1D2125]">Local LLM Runtimes</span>
-            <span className="text-[#1D2125]">•</span>
-            <span className="px-2.5 py-1 rounded-md bg-[#101418] border border-[#1D2125]">FastAPI</span>
-            <span className="text-[#1D2125]">•</span>
-            <span className="px-2.5 py-1 rounded-md bg-[#101418] border border-[#1D2125]">PostgreSQL</span>
-            <span className="text-[#1D2125]">•</span>
-            <span className="px-2.5 py-1 rounded-md bg-[#101418] border border-[#1D2125]">MCP</span>
-            <span className="text-[#1D2125]">•</span>
-            <span className="px-2.5 py-1 rounded-md bg-[#101418] border border-[#1D2125]">Docker</span>
-          </div>
-        </div>
-
-        {/* Level 5: Direct Engineering CTAs */}
-        <div
-          className={`flex flex-col sm:flex-row items-center justify-center gap-3.5 w-full sm:w-auto mb-10 ${
-            inView ? 'animate-fade-in-up' : 'opacity-0'
-          }`}
-          style={{ animationDelay: '0.5s' }}
-        >
-          {/* Primary CTA: Flagship Entry Point */}
-          <Button
-            variant="primary"
-            onClick={() => scrollToSection('projects')}
-            icon={<ArrowRight size={16} />}
-            iconPosition="right"
-            className="w-full sm:w-auto text-sm font-semibold"
-          >
-            Explore Flagship Project (ULTRON)
-          </Button>
-
-          {/* Secondary CTA: Technical Architecture Exploration */}
-          <Button
-            variant="secondary"
-            onClick={() => scrollToSection('projects')}
-            icon={<Layers size={15} />}
-            iconPosition="left"
-            className="w-full sm:w-auto text-sm"
-          >
-            Explore System Architecture
-          </Button>
-        </div>
-
-        {/* Level 6: Technical Capability Cards */}
-        <div
-          className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 w-full max-w-3xl mx-auto mb-10 ${
-            inView ? 'animate-fade-in-up' : 'opacity-0'
-          }`}
-          style={{ animationDelay: '0.6s' }}
-        >
-          {[
-            { title: 'Autonomous Agents', detail: 'GitHub Issue-to-PR Workflow' },
-            { title: 'Local LLM Runtimes', detail: 'Custom Telemetry & Memory' },
-            { title: 'Multi-Agent MCP', detail: 'Shared SQLite Context' },
-            { title: 'Production Backends', detail: 'FastAPI & Geospatial Queries' },
-          ].map(({ title, detail }) => (
-            <div
-              key={title}
-              className="glass rounded-xl p-3.5 text-left border border-[#1D2125] hover:border-[#F05A17]/40 transition-all duration-300"
-            >
-              <div className="text-xs sm:text-sm font-bold text-[#E6E3DF] font-mono mb-1">
-                {title}
-              </div>
-              <div className="text-[11px] text-[#A8A29C] font-sans leading-tight">{detail}</div>
-            </div>
-          ))}
-        </div>
-
-        {/* Level 7: Social & Contact Links */}
-        <div
-          className={`flex items-center justify-center gap-6 ${
-            inView ? 'animate-fade-in-up' : 'opacity-0'
-          }`}
-          style={{ animationDelay: '0.7s' }}
-        >
-          {[
-            { icon: GithubIcon, href: 'https://github.com/sukhithms25', label: 'GitHub' },
-            { icon: LinkedinIcon, href: 'https://linkedin.com/in/sukhith-m-s-324487382', label: 'LinkedIn' },
-            { icon: Mail, href: 'mailto:sukhithms25@gmail.com', label: 'Email' },
-            { icon: Phone, href: 'tel:+917483921441', label: 'Phone' },
-          ].map(({ icon: Icon, href, label }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex flex-col items-center gap-1 transition-all duration-300 hover:-translate-y-1 group"
-              title={label}
-            >
-              <div
-                className="w-9 h-9 rounded-full bg-[#101418] flex items-center justify-center border border-[#1D2125] transition-all duration-300 group-hover:border-[#F05A17]/50 text-[#A8A29C]"
-              >
-                <Icon size={16} className="group-hover:text-[#F05A17] transition-colors" />
-              </div>
-              <span className="text-[10px] font-mono text-[#A8A29C] group-hover:text-[#E6E3DF] transition-colors">
-                {label}
-              </span>
-            </a>
-          ))}
-        </div>
+        <span style={{
+          fontFamily: 'monospace',
+          fontSize: '9px',
+          letterSpacing: '0.22em',
+          textTransform: 'uppercase',
+          color: '#111214',
+        }}>
+          SCROLL
+        </span>
+        <span style={{ color: '#111214', fontSize: '14px', lineHeight: 1 }}>↓</span>
       </div>
 
-      {/* Floating Scroll Chevron */}
-      <button
-        onClick={() => scrollToSection('projects')}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 transition-colors z-10 animate-float text-[#A8A29C] hover:text-[#E6E3DF]"
-      >
-        <span className="text-[10px] font-mono tracking-widest uppercase text-[#A8A29C]">
-          Scroll
-        </span>
-        <ChevronDown size={16} className="animate-bounce text-[#F05A17]" />
-      </button>
+      {/* ── NAV is in App.tsx at z-index 999 — always above everything ── */}
+
     </section>
   );
 };

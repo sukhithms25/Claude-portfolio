@@ -14,7 +14,7 @@ import './index.css';
 
 function App() {
   const [loading, setLoading] = useState(true);
-
+  // planning to build the telegram bot
   // Silently tracks visitors and pings Telegram Bot when credentials are set
   useVisitorTracker();
 

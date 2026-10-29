@@ -77,9 +77,12 @@ export const ContactSection: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    subject: '',
     message: '',
+    hp: '',
   });
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
   const [copiedEmail, setCopiedEmail] = useState(false);
 
   useEffect(() => {
@@ -111,50 +114,83 @@ export const ContactSection: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name.trim() || !formData.email.trim() || !formData.message.trim()) {
+
+    // Prevent accidental duplicate submissions
+    if (status === 'sending') {
+      return;
+    }
+
+    const trimmedName = formData.name.trim();
+    const trimmedEmail = formData.email.trim();
+    const trimmedSubject = formData.subject.trim();
+    const trimmedMessage = formData.message.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedSubject || !trimmedMessage) {
+      setErrorMessage('Please fill in all required fields.');
+      setStatus('error');
+      return;
+    }
+
+    // Client-side email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      setErrorMessage('Please enter a valid email address.');
+      setStatus('error');
       return;
     }
 
     setStatus('sending');
+    setErrorMessage('');
 
     try {
-      const response = await fetch('https://formsubmit.co/ajax/b61f15724e2b51c9f31c7f5da080146f', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          _subject: `Message from ${formData.name} via Portfolio`,
-          message: formData.message,
-          _captcha: 'false',
-          _replyto: formData.email,
+          name: trimmedName,
+          email: trimmedEmail,
+          subject: trimmedSubject,
+          message: trimmedMessage,
+          hp: formData.hp,
         }),
       });
 
-      if (response.ok) {
+      const data = await response.json().catch(() => null);
+
+      if (response.ok && data?.success) {
         if (isPostHogConfigured) {
           posthog.capture('contact_message_sent');
         }
         setStatus('success');
+        // Clear form values only on confirmed server delivery
         setFormData({
           name: '',
           email: '',
+          subject: '',
           message: '',
+          hp: '',
         });
       } else {
         if (isPostHogConfigured) {
           posthog.capture('contact_message_failed');
         }
         setStatus('error');
+        setErrorMessage(
+          data?.error ||
+          'Your message could not be sent. Please try again later or contact me directly by email.'
+        );
       }
     } catch {
       if (isPostHogConfigured) {
         posthog.capture('contact_message_failed');
       }
       setStatus('error');
+      setErrorMessage(
+        'Your message could not be sent. Please try again later or contact me directly by email.'
+      );
     }
   };
 
@@ -339,14 +375,16 @@ export const ContactSection: React.FC = () => {
                   <div className="w-14 h-14 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mx-auto mb-4">
                     <CheckCircle2 size={28} className="text-emerald-400" />
                   </div>
-                  <h4 className="text-xl font-semibold text-white mb-2">Message Delivered!</h4>
+                  <h4 className="text-xl font-semibold text-white mb-2">Message Sent!</h4>
                   <p className="text-sm text-slate-300 font-sans max-w-sm mx-auto mb-6">
-                    Thank you for reaching out! Your message was sent directly to my email inbox, and
-                    I will reply to your provided address shortly.
+                    Message sent successfully. Thank you for reaching out.
                   </p>
                   <button
                     type="button"
-                    onClick={() => setStatus('idle')}
+                    onClick={() => {
+                      setStatus('idle');
+                      setErrorMessage('');
+                    }}
                     className="px-6 py-2.5 rounded-xl text-xs font-mono font-medium bg-[#101418] text-white border border-[#1D2125] hover:border-[#F05A17] transition-colors cursor-pointer"
                   >
                     Send Another Message
@@ -355,6 +393,19 @@ export const ContactSection: React.FC = () => {
               ) : (
                 /* Conversation Form */
                 <form onSubmit={handleSubmit} className="space-y-5">
+                  {/* Honeypot anti-spam field */}
+                  <div className="hidden" aria-hidden="true" style={{ display: 'none' }}>
+                    <label htmlFor="sender-hp">Leave this empty</label>
+                    <input
+                      id="sender-hp"
+                      type="text"
+                      name="hp"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      value={formData.hp}
+                      onChange={(e) => setFormData({ ...formData, hp: e.target.value })}
+                    />
+                  </div>
 
                   {/* Name and Email Row */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -369,6 +420,7 @@ export const ContactSection: React.FC = () => {
                         id="sender-name"
                         type="text"
                         required
+                        maxLength={100}
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         placeholder="Alex Johnson"
@@ -387,12 +439,33 @@ export const ContactSection: React.FC = () => {
                         id="sender-email"
                         type="email"
                         required
+                        maxLength={254}
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         placeholder="alex@company.com"
                         className="w-full px-3.5 py-2.5 rounded-xl bg-[#101418] border border-[#1D2125] text-sm text-[#E6E3DF] placeholder-[#A8A29C]/40 focus:outline-none focus:border-[#F05A17] focus:ring-1 focus:ring-[#F05A17] transition-all font-sans"
                       />
                     </div>
+                  </div>
+
+                  {/* Subject Input */}
+                  <div>
+                    <label
+                      htmlFor="sender-subject"
+                      className="block text-xs font-mono uppercase tracking-wider text-[#A8A29C] mb-1.5"
+                    >
+                      Subject <span className="text-[#F05A17]">*</span>
+                    </label>
+                    <input
+                      id="sender-subject"
+                      type="text"
+                      required
+                      maxLength={150}
+                      value={formData.subject}
+                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+                      placeholder="Collaboration, Opportunity, Question..."
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#101418] border border-[#1D2125] text-sm text-[#E6E3DF] placeholder-[#A8A29C]/40 focus:outline-none focus:border-[#F05A17] focus:ring-1 focus:ring-[#F05A17] transition-all font-sans"
+                    />
                   </div>
 
                   {/* Message Body */}
@@ -407,6 +480,7 @@ export const ContactSection: React.FC = () => {
                       ref={messageInputRef}
                       id="conversation-message"
                       required
+                      maxLength={5000}
                       rows={4}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
@@ -417,12 +491,12 @@ export const ContactSection: React.FC = () => {
 
                   {/* Error Notification */}
                   {status === 'error' && (
-                    <div className="p-3 rounded-xl bg-red-950/30 border border-red-500/30 text-xs font-mono text-red-300 flex items-center justify-between gap-2">
-                      <span>Direct dispatch encountered an issue.</span>
+                    <div className="p-3.5 rounded-xl bg-red-950/30 border border-red-500/30 text-xs font-mono text-red-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2">
+                      <span>{errorMessage || 'Your message could not be sent. Please try again later or contact me directly by email.'}</span>
                       <button
                         type="button"
                         onClick={handleCopyEmail}
-                        className="underline text-white font-semibold cursor-pointer"
+                        className="underline text-white font-semibold cursor-pointer shrink-0"
                       >
                         Copy sukhithms25@gmail.com
                       </button>
